@@ -1,53 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fnst.face.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.fnst.face.entity.User" >
+<mapper namespace="com.fnst.face.mapper.MeetingMapper" >
+  <resultMap id="BaseResultMap" type="com.fnst.face.entity.Meeting" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="job_number" property="jobNumber" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="BIT" />
-    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="meeting_time" property="meetingTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, job_number, name, sex, img_url, update_time, create_time
+    id, name, meeting_time, update_time, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from meeting
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from user
+    delete from meeting
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fnst.face.entity.User" >
-    insert into user (id, job_number, name, 
-      sex, img_url, update_time, 
-      create_time)
-    values (#{id,jdbcType=BIGINT}, #{jobNumber,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=BIT}, #{imgUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.fnst.face.entity.Meeting" >
+    insert into meeting (id, name, meeting_time, 
+      update_time, create_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{meetingTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.fnst.face.entity.User" >
-    insert into user
+  <insert id="insertSelective" parameterType="com.fnst.face.entity.Meeting" >
+    insert into meeting
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="jobNumber != null" >
-        job_number,
-      </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="sex != null" >
-        sex,
-      </if>
-      <if test="imgUrl != null" >
-        img_url,
+      <if test="meetingTime != null" >
+        meeting_time,
       </if>
       <if test="updateTime != null" >
         update_time,
@@ -60,17 +50,11 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="jobNumber != null" >
-        #{jobNumber,jdbcType=BIGINT},
-      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=BIT},
-      </if>
-      <if test="imgUrl != null" >
-        #{imgUrl,jdbcType=VARCHAR},
+      <if test="meetingTime != null" >
+        #{meetingTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
@@ -80,20 +64,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fnst.face.entity.User" >
-    update user
+  <update id="updateByPrimaryKeySelective" parameterType="com.fnst.face.entity.Meeting" >
+    update meeting
     <set >
-      <if test="jobNumber != null" >
-        job_number = #{jobNumber,jdbcType=BIGINT},
-      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=BIT},
-      </if>
-      <if test="imgUrl != null" >
-        img_url = #{imgUrl,jdbcType=VARCHAR},
+      <if test="meetingTime != null" >
+        meeting_time = #{meetingTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -104,12 +82,10 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fnst.face.entity.User" >
-    update user
-    set job_number = #{jobNumber,jdbcType=BIGINT},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=BIT},
-      img_url = #{imgUrl,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.fnst.face.entity.Meeting" >
+    update meeting
+    set name = #{name,jdbcType=VARCHAR},
+      meeting_time = #{meetingTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

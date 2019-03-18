@@ -2,16 +2,12 @@ package com.fnst.face.entity;
 
 import java.util.Date;
 
-public class User {
+public class Meeting {
     private Long id;
-
-    private Long jobNumber;
 
     private String name;
 
-    private Boolean sex;
-
-    private String imgUrl;
+    private Date meetingTime;
 
     private Date updateTime;
 
@@ -25,14 +21,6 @@ public class User {
         this.id = id;
     }
 
-    public Long getJobNumber() {
-        return jobNumber;
-    }
-
-    public void setJobNumber(Long jobNumber) {
-        this.jobNumber = jobNumber;
-    }
-
     public String getName() {
         return name;
     }
@@ -41,20 +29,12 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
-    public Boolean getSex() {
-        return sex;
+    public Date getMeetingTime() {
+        return meetingTime;
     }
 
-    public void setSex(Boolean sex) {
-        this.sex = sex;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+    public void setMeetingTime(Date meetingTime) {
+        this.meetingTime = meetingTime;
     }
 
     public Date getUpdateTime() {

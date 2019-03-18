@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019/3/17 16:23
  **/
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("list")
+    @RequestMapping("/list")
     public ServerResponse list() {
         return userService.listUser();
     }

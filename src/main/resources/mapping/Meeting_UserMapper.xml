@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fnst.face.mapper.Meeting_UserMapper" >
+  <resultMap id="BaseResultMap" type="com.fnst.face.entity.Meeting_User" >
+    <id column="meeting_id" property="meetingId" jdbcType="BIGINT" />
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="is_attend" property="isAttend" jdbcType="TINYINT" />
+    <result column="is_visited" property="isVisited" jdbcType="TINYINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    meeting_id, user_id, is_attend, is_visited, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.fnst.face.entity.Meeting_UserKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from meeting_user
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.fnst.face.entity.Meeting_UserKey" >
+    delete from meeting_user
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fnst.face.entity.Meeting_User" >
+    insert into meeting_user (meeting_id, user_id, is_attend, 
+      is_visited, update_time, create_time
+      )
+    values (#{meetingId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{isAttend,jdbcType=TINYINT}, 
+      #{isVisited,jdbcType=TINYINT}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fnst.face.entity.Meeting_User" >
+    insert into meeting_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meetingId != null" >
+        meeting_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="isAttend != null" >
+        is_attend,
+      </if>
+      <if test="isVisited != null" >
+        is_visited,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meetingId != null" >
+        #{meetingId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="isAttend != null" >
+        #{isAttend,jdbcType=TINYINT},
+      </if>
+      <if test="isVisited != null" >
+        #{isVisited,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fnst.face.entity.Meeting_User" >
+    update meeting_user
+    <set >
+      <if test="isAttend != null" >
+        is_attend = #{isAttend,jdbcType=TINYINT},
+      </if>
+      <if test="isVisited != null" >
+        is_visited = #{isVisited,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fnst.face.entity.Meeting_User" >
+    update meeting_user
+    set is_attend = #{isAttend,jdbcType=TINYINT},
+      is_visited = #{isVisited,jdbcType=TINYINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where meeting_id = #{meetingId,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>
