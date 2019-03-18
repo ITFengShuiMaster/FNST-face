@@ -1,5 +1,7 @@
 package com.fnst.face.util;
 
+import sun.net.ftp.FtpClient;
+
 import javax.activation.MimetypesFileTypeMap;
 import java.io.*;
 import java.net.HttpURLConnection;

@@ -38,7 +38,7 @@ public class FaceCompareUtil {
      *@author  卢越
      *@date  2019/3/18
      */
-    public static String ImageToBase64ByLocal(String imgFile) {
+    public static String imageToBase64ByLocal(String imgFile) {
         InputStream is = null;
         byte[] data = null;
         // 读取图片字节数组
@@ -142,6 +142,7 @@ public class FaceCompareUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println();
+        System.out.println(compare(imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue1.jpg")
+                , imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue2.JPG")));
     }
 }

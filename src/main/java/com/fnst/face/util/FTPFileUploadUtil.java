@@ -43,6 +43,7 @@ public class FTPFileUploadUtil {
         log.info("开始连接ftp服务器，准备上传");
         boolean result = ftpUtil.upload("img", fileList);
         log.info("开始上传文件，上传结果：{}", result);
+
         return result;
     }
 
@@ -95,7 +96,7 @@ public class FTPFileUploadUtil {
         boolean isSuccess = false;
         ftpClient = new FTPClient();
         try {
-            ftpClient.connect(ip);
+            ftpClient.connect(ip, port);
             isSuccess = ftpClient.login(userName, password);
         } catch (IOException e) {
             log.error("连接ftp服务器失败", e);
