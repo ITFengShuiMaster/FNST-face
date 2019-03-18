@@ -4,10 +4,7 @@ import com.fnst.face.common.ServerResponse;
 import com.fnst.face.entity.User;
 import com.fnst.face.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Luyue
@@ -23,5 +20,20 @@ public class UserController {
     @PostMapping
     public ServerResponse create(User user) {
         return userService.insertUser(user);
+    }
+
+    @GetMapping("/{id}")
+    public ServerResponse get(@PathVariable Long id) {
+        return userService.getUser(id);
+    }
+
+    @PutMapping
+    public ServerResponse update(User user) {
+        return userService.updateUser(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public ServerResponse remove(@PathVariable Long id) {
+        return userService.deleteUser(id);
     }
 }

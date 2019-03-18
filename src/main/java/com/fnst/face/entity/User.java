@@ -1,5 +1,7 @@
 package com.fnst.face.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 public class User {
@@ -16,6 +18,8 @@ public class User {
     private Date updateTime;
 
     private Date createTime;
+
+    private MultipartFile imgFile;
 
     public Long getId() {
         return id;
@@ -71,5 +75,13 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public MultipartFile getImgFile() {
+        return imgFile;
+    }
+
+    public void setImgFile(MultipartFile imgFile) {
+        this.imgFile = imgFile;
     }
 }

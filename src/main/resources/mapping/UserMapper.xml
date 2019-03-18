@@ -123,4 +123,11 @@
       #{sex,jdbcType=BIT}, #{imgUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
+
+  <select id="selectByUserNumber" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{userNumber}
+  </select>
 </mapper>
