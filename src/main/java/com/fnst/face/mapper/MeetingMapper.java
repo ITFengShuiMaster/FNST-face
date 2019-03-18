@@ -1,5 +1,7 @@
 package com.fnst.face.mapper;
 
+import java.util.List;
+
 import com.fnst.face.entity.Meeting;
 
 public interface MeetingMapper {
@@ -14,4 +16,8 @@ public interface MeetingMapper {
     int updateByPrimaryKeySelective(Meeting record);
 
     int updateByPrimaryKey(Meeting record);
+    
+    List<Meeting> selectAll();
+    
+    int insertReturnId(Meeting meeting);
 }
