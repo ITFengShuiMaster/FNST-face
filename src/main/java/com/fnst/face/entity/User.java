@@ -5,7 +5,7 @@ import java.util.Date;
 public class User {
     private Long id;
 
-    private Long jobNumber;
+    private String jobNumber;
 
     private String name;
 
@@ -25,12 +25,12 @@ public class User {
         this.id = id;
     }
 
-    public Long getJobNumber() {
+    public String getJobNumber() {
         return jobNumber;
     }
 
-    public void setJobNumber(Long jobNumber) {
-        this.jobNumber = jobNumber;
+    public void setJobNumber(String jobNumber) {
+        this.jobNumber = jobNumber == null ? null : jobNumber.trim();
     }
 
     public String getName() {

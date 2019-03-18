@@ -1,9 +1,12 @@
 package com.fnst.face.controller;
 
 import com.fnst.face.common.ServerResponse;
+import com.fnst.face.entity.User;
 import com.fnst.face.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,8 +20,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/list")
-    public ServerResponse list() {
-        return userService.listUser();
+    @PostMapping
+    public ServerResponse create(User user) {
+        return userService.insertUser(user);
     }
 }

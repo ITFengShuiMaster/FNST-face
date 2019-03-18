@@ -3,7 +3,7 @@
 <mapper namespace="com.fnst.face.mapper.UserMapper" >
   <resultMap id="BaseResultMap" type="com.fnst.face.entity.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="job_number" property="jobNumber" jdbcType="BIGINT" />
+    <result column="job_number" property="jobNumber" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="BIT" />
     <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     insert into user (id, job_number, name, 
       sex, img_url, update_time, 
       create_time)
-    values (#{id,jdbcType=BIGINT}, #{jobNumber,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{jobNumber,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=BIT}, #{imgUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -61,7 +61,7 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="jobNumber != null" >
-        #{jobNumber,jdbcType=BIGINT},
+        #{jobNumber,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -84,7 +84,7 @@
     update user
     <set >
       <if test="jobNumber != null" >
-        job_number = #{jobNumber,jdbcType=BIGINT},
+        job_number = #{jobNumber,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -106,7 +106,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fnst.face.entity.User" >
     update user
-    set job_number = #{jobNumber,jdbcType=BIGINT},
+    set job_number = #{jobNumber,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=BIT},
       img_url = #{imgUrl,jdbcType=VARCHAR},
@@ -114,4 +114,13 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <insert id="insertReturnId" useGeneratedKeys="true" keyProperty="userId" parameterType="com.fnst.face.entity.User">
+    insert into user (id, job_number, name,
+      sex, img_url, update_time,
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{jobNumber,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{sex,jdbcType=BIT}, #{imgUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
 </mapper>
