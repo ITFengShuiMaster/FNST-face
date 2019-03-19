@@ -33,29 +33,6 @@ public class FaceCompareUtil {
     private static String apiKey = "-62uv_akklJjwoQuZawRjy-dbxoPhvWT";
     private static String apiSecreat = "CTTqho-9btsW-DVPJcLeCBIFHIt6LH_A";
 
-    /** 将图片转换为base64编码
-     *@return  String base64图片编码
-     *@author  卢越
-     *@date  2019/3/18
-     */
-    public static String imageToBase64ByLocal(String imgFile) {
-        InputStream is = null;
-        byte[] data = null;
-        // 读取图片字节数组
-        try {
-            is = new FileInputStream(imgFile);
-            data = new byte[is.available()];
-            is.read(data);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // 对字节数组Base64编码
-        BASE64Encoder encoder = new BASE64Encoder();
-        // 返回Base64编码过的字节数组字符串
-        return encoder.encode(data);
-    }
-
     /**  人脸图片比较，参数为base64编码
      *@param  imgBase64_1 待比较图片1的base64编码
      *@param imgBase64_2 待比较图片2的base64编码
@@ -65,7 +42,7 @@ public class FaceCompareUtil {
      *@author  卢越
      *@date  2019/3/18
      */
-    private static String compare(String imgBase64_1, String imgBase64_2) {
+    public static String compare(String imgBase64_1, String imgBase64_2) {
         String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
 
         HashMap<String, String> map = new HashMap<>();
@@ -142,7 +119,7 @@ public class FaceCompareUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(compare(imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue1.jpg")
-                , imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue2.JPG")));
+//        System.out.println(compare(imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue1.jpg")
+//                , imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue2.JPG")));
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/signin/signIn.css">
+    <script src="js/jquery-3.2.1.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div class="section_img">
+            <video id="video" width="250" height="330" autoplay="autoplay"></video>
+            <canvas id="canvas" width="500px" height="500px" style="display: none;"></canvas>
+        </div>
+        <div class="section_signin">
+            <button type="button" onclick="takePhoto()">签到</button>
+
+            <div class="detail">
+                <div id="u_id"></div><span>工号</span>
+            </div>
+            <div class="detail">
+                <div id="u_name"></div><span>姓名</span>
+            </div>
+
+            <span id="success" class="display_none">签到成功</span>
+            <span id="fail" class="display_none">签到失败</span>
+            <span id="again" class="display_none">已簽到</span>
+        </div>
+    </div>
+</div>
+<script src="js/signin/signIn.js"></script>
+</body>
+</html>

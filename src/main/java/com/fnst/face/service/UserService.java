@@ -33,6 +33,8 @@ public class UserService {
     private String imgPath;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private FileService fileService;
 
     public ServerResponse deleteUser(Long id) {
         if (id == null) {
@@ -80,7 +82,7 @@ public class UserService {
             return ServerResponse.failure(ResponseCode.USER_HAS_EXISTED);
         }
 
-        String fileName = saveImgFile(user.getImgFile(), path);
+        String fileName = fileService.saveImgFile(user.getImgFile(), path);
         if (StringUtils.isBlank(fileName)) {
             return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
@@ -114,42 +116,6 @@ public class UserService {
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
         return true;
-    }
-
-    private String saveImgFile(MultipartFile file, String path) {
-        if (file.isEmpty()) {
-            return "";
-        }
-
-        File fileDir = new File(path);
-        if (!fileDir.exists()) {
-            fileDir.setWritable(true);
-            fileDir.mkdirs();
-        }
-
-        String fileName = DateTimeUtil.dateToStr(new Date()) + "-" + file.getOriginalFilename();
-        File targetFile = new File(path, fileName);
-        // 将图片上传到FTP服务器
-        try {
-            // 到这一步，图片已经成功上传
-            file.transferTo(targetFile);
-
-            // 将图片上传至ftp服务器
-            if (!FTPFileUploadUtil.ftpUpload(Lists.newArrayList(targetFile))) {
-                return null;
-            }
-
-            //删除本地图片
-            targetFile.delete();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return targetFile.getName();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(StringUtils.isBlank(null));
     }
 
     public ServerResponse listUsers() {
