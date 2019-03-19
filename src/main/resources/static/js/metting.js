@@ -1,7 +1,7 @@
 $(function() {
 
 	$('#dg').datagrid({
-		url : '/',
+		url : '/meeting/list',
 		title : '会议列表',
 		striped : true,
 		nowrap : true,
@@ -17,16 +17,17 @@ $(function() {
 				width : 80
 			},
 			{
-				field : 'date',
-				title : '日期',
+				field : 'meetingTime',
+				title : '开会时间',
 				width : 60,
-				formatter:function(value,row,index){
+				/*formatter:function(value,row,index){
 					if(value==undefined){
 						return '';
 					}else{
 						return parseToDate(value).format("yyyy-MM-dd");
 					}
 				}
+				*/
 			},		
 			{
 				field : 'id',     //"<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
@@ -35,8 +36,6 @@ $(function() {
 				formatter: function(value,row,index){
 					
 						return "<button class='btn btn-success btn-xs' data-toggle='modal' data-target='#changeChar'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteChar'>删除</button>"
-					
-					
 				}
 			}
 		]],		
@@ -47,6 +46,7 @@ $(function() {
 		pageNumber : 1,
 		
 	});
+	
 });
 
 function search(){

@@ -17,9 +17,10 @@ $(function() {
 				width : 80
 			},
 			{
-				field : 'idCard',
+				field : 'jobNumber',
 				title : '工号',
 				width : 60,
+				/*
 				formatter:function(value,row,index){
 					if(value==undefined){
 						return '';
@@ -27,7 +28,13 @@ $(function() {
 						return parseToDate(value).format("yyyy-MM-dd");
 					}
 				}
-			},		
+				*/
+			},
+			{
+				field : 'sex',
+				title : '性别',
+				width : 60
+			},
 			{
 				field : 'id',
 				title : '操作',
