@@ -1,6 +1,6 @@
 package com.fnst.face.entity;
 
-public class Meeting_UserKey {
+public class MeetingUserKey {
     private Long meetingId;
 
     private Long userId;

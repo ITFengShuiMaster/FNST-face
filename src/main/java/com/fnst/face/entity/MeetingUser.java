@@ -2,7 +2,7 @@ package com.fnst.face.entity;
 
 import java.util.Date;
 
-public class Meeting_User extends Meeting_UserKey {
+public class MeetingUser extends MeetingUserKey {
     private Byte isAttend;
 
     private Byte isVisited;
@@ -10,6 +10,8 @@ public class Meeting_User extends Meeting_UserKey {
     private Date updateTime;
 
     private Date createTime;
+
+    private String imgUrl;
 
     public Byte getIsAttend() {
         return isAttend;
@@ -41,5 +43,13 @@ public class Meeting_User extends Meeting_UserKey {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 }

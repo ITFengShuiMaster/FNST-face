@@ -5,6 +5,8 @@ import com.fnst.face.common.ServerResponse;
 import com.fnst.face.entity.User;
 import com.fnst.face.mapper.UserMapper;
 import com.fnst.face.util.DateTimeUtil;
+import com.fnst.face.util.FTPFileUploadUtil;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +29,6 @@ import java.util.Date;
 @Service
 public class UserService {
 
-    @Value("${local.path}")
-    private String localPath;
     @Value("${img.path}")
     private String imgPath;
     @Autowired
@@ -71,14 +71,14 @@ public class UserService {
         return ServerResponse.success(user);
     }
 
-    public ServerResponse insertUser(User user) {
+    public ServerResponse insertUser(User user, String path) {
         if (!validUserData(user)) {
-            return ServerResponse.failure("参数不全或参数错误");
+            return ServerResponse.failure(ResponseCode.PARAM_NOT_COMPLETE);
         }
 
-        String fileName = saveimgFile(user.getImgFile());
-        if (StringUtils.isBlank(imgPath)) {
-            return ServerResponse.failure("参数不全或参数错误");
+        String fileName = saveImgFile(user.getImgFile(), path);
+        if (StringUtils.isBlank(fileName)) {
+            return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
 
         user.setImgUrl(imgPath + fileName);
@@ -115,39 +115,34 @@ public class UserService {
         return true;
     }
 
-    private boolean checkUpdateUserData(User user) {
-        if (StringUtils.isBlank(user.getName())) {
-            return false;
-        }
-
-        if (StringUtils.isBlank(user.getImgUrl())) {
-            return false;
-        }
-
-        if (StringUtils.isBlank(user.getJobNumber())) {
-            return false;
-        }
-
-        if (user.getSex() == null) {
-            user.setSex(false);
-        }
-
-        user.setUpdateTime(new Date());
-        return true;
-    }
-
-    private String saveimgFile(MultipartFile file) {
+    private String saveImgFile(MultipartFile file, String path) {
         if (file.isEmpty()) {
             return "";
         }
+
+        File fileDir = new File(path);
+        if (!fileDir.exists()) {
+            fileDir.setWritable(true);
+            fileDir.mkdirs();
+        }
+
         String fileName = DateTimeUtil.dateToStr(new Date()) + "-" + file.getOriginalFilename();
-        File targetFile = new File(localPath, fileName);
-        // TODO 将文件上传到ftp服务器
+        File targetFile = new File(path, fileName);
+        // 将图片上传到FTP服务器
         try {
+            // 到这一步，图片已经成功上传
             file.transferTo(targetFile);
+
+            // 将图片上传至ftp服务器
+            if (!FTPFileUploadUtil.ftpUpload(Lists.newArrayList(targetFile))) {
+                return null;
+            }
+
+            //删除本地图片
+            targetFile.delete();
         } catch (IOException e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
         return targetFile.getName();
     }

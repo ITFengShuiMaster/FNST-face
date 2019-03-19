@@ -6,6 +6,8 @@ import com.fnst.face.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Luyue
  * @date 2019/3/17 16:23
@@ -18,8 +20,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ServerResponse create(User user) {
-        return userService.insertUser(user);
+    public ServerResponse create(User user, HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        return userService.insertUser(user, path);
     }
 
     @GetMapping("/{id}")
