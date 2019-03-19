@@ -30,7 +30,7 @@ public class UserMeetingController {
 
     @PostMapping("/test")
     public ServerResponse testImg(MultipartFile file, String text) {
-
+        int b = 1;
         int a = 1;
         return ServerResponse.success();
     }
