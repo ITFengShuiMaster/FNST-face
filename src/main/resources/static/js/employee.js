@@ -1,6 +1,6 @@
 $(function() {
 
-	$('#dg').datagrid({
+	$('#employeelist').datagrid({
 		url : '/',
 		title : '员工列表',
 		striped : true,
@@ -17,16 +17,14 @@ $(function() {
 				width : 80
 			},
 			{
-				field : 'idCard',
+				field : 'sex',
+				title : '性别',
+				width : 80
+			},
+			{
+				field : 'jobNumber',
 				title : '工号',
-				width : 60,
-				formatter:function(value,row,index){
-					if(value==undefined){
-						return '';
-					}else{
-						return parseToDate(value).format("yyyy-MM-dd");
-					}
-				}
+				width : 60
 			},		
 			{
 				field : 'id',
@@ -58,11 +56,22 @@ function search(){
 	}
 	
 
-	$('#dg').datagrid({
+	$('#employeelist').datagrid({
 		queryParams: params
 	});
 
 }
 
-
+function addemployee(){
+	$('#employeedlog').dialog({
+		title: "员工添加",
+		iconCls:'icon-add-new',
+		width:400,
+		height:400,
+		closed: false,
+		cache: false,
+		modal: true,
+		href:"./addemployee.html"
+	});
+}
 

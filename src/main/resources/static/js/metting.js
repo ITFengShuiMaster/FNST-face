@@ -1,7 +1,7 @@
 $(function() {
 
-	$('#dg').datagrid({
-		url : '/',
+	$('#meetinglist').datagrid({
+		url : '/meeting/list',
 		title : '会议列表',
 		striped : true,
 		nowrap : true,
@@ -17,8 +17,8 @@ $(function() {
 				width : 80
 			},
 			{
-				field : 'date',
-				title : '日期',
+				field : 'meetingTime',
+				title : '会议日期',
 				width : 60,
 				formatter:function(value,row,index){
 					if(value==undefined){
@@ -58,8 +58,21 @@ function search(){
 	}
 	
 
-	$('#dg').datagrid({
+	$('#meetinglist').datagrid({
 		queryParams: params
+	});
+
+}
+function addmeeting() {
+	$('#meetingdlog').dialog({
+		title: "新增会议",
+		iconCls:'icon-add-new',
+		width:400,
+		height:400,
+		closed: false,
+		cache: false,
+		modal: true,
+		href:"./addmeeting.html"
 	});
 
 }

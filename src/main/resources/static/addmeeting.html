@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加会议</title>
+    <link rel="stylesheet" type="text/css" href="./easyui/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="./easyui/themes/icon.css" />
+    <script src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="./easyui/locale/easyui-lang-zh_CN.js" ></script>
+
+
+
+
+</head>
+<body>
+<style>
+    input[type='text']{width:173px;}
+</style>
+
+
+
+<form id="meetingform" >
+
+    <table id="tab">
+        <tr>
+            <td style="text-align:right">会议名称:</td>
+            <td><input id="name" name="name"  class="easyui-textbox"  type="text" value="" data-options="required:true" /></td>
+        </tr>
+        <!--<tr>-->
+            <!--<td style="text-align:right">会议地点:</td>-->
+            <!--<td><input id="addr" name="addr"  class="easyui-textbox"  type="text" value="" data-options="required:true" /></td>-->
+        <!--</tr>-->
+        <tr>
+            <td style="text-align:right">会议时间:</td>
+            <td><input class="easyui-datebox" id="date" name="meetingTime" value="" data-options="required:true"/></td>
+        </tr>
+        <tr>
+            <td style="text-align:right">更新时间:</td>
+            <td><input class="easyui-datebox" id="date" name="updateTime" value="" data-options="required:true"/></td>
+        </tr>
+        <tr>
+            <td style="text-align:right">创建时间:</td>
+            <td><input class="easyui-datebox" id="date" name="createTime" value="" data-options="required:true"/></td>
+        </tr>
+
+        <tr>
+            <td><a href="javascript:void(0);" onclick="save();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a></td>
+            <td><a href="javascript:void(0);" onclick="cancel()" class="easyui-linkbutton" data-options="iconCls:'icon-cross'">取消</a></td>
+        </tr>
+    </table>
+</form>
+<script>
+    function save(){
+        if (!$("#meetingform").form("validate")){
+            $.messager.alert('提示', "红色区域为必填项。");
+            return false;
+        }
+        $.ajax({
+            url : '',
+            type : 'post',
+            dataType: "json",
+            data : $("#meetingform").serialize(),
+            beforeSend : function () {
+                $.messager.progress({
+                    text : '正在保存中...,按Esc取消。'
+                });
+            },
+            success : function (data) {
+                $.messager.progress('close');
+                if (data.result=='true') {
+                    $.messager.alert('提示', "保存成功！");
+                    $("#meetinglist").datagrid("reload");
+                    cancel();
+                }
+                else {
+                    $.messager.alert('提示', data.errorMessage);
+                }
+            }
+        });
+    }
+
+    function cancel(){
+        $('#meetingdlog').dialog('close');
+    }
+</script>
+</body>
+</html>
