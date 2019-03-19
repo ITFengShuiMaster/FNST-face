@@ -30,6 +30,11 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @GetMapping
+    public ServerResponse get() {
+        return userService.listUsers();
+    }
+
     @PutMapping
     public ServerResponse update(User user) {
         return userService.updateUser(user);

@@ -76,20 +76,21 @@ public class UserService {
             return ServerResponse.failure(ResponseCode.PARAM_NOT_COMPLETE);
         }
 
+        if (userMapper.selectByUserNumber(user.getJobNumber()) != null) {
+            return ServerResponse.failure(ResponseCode.USER_HAS_EXISTED);
+        }
+
         String fileName = saveImgFile(user.getImgFile(), path);
         if (StringUtils.isBlank(fileName)) {
             return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
 
         user.setImgUrl(imgPath + fileName);
-        try {
-            if (userMapper.insertReturnId(user) <= 0) {
-                return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (userMapper.insertReturnId(user) <= 0) {
             return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
         }
+
         return ServerResponse.success();
     }
 
@@ -148,11 +149,10 @@ public class UserService {
     }
 
     public static void main(String[] args) {
-        try {
-            File file = ResourceUtils.getFile("classpath:static");
-            System.out.println(file.getAbsolutePath());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        System.out.println(StringUtils.isBlank(null));
+    }
+
+    public ServerResponse listUsers() {
+        return ServerResponse.success(userMapper.selectAll());
     }
 }

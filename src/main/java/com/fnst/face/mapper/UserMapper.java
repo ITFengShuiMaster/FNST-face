@@ -2,6 +2,8 @@ package com.fnst.face.mapper;
 
 import com.fnst.face.entity.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -18,4 +20,6 @@ public interface UserMapper {
     int insertReturnId(User user);
 
     User selectByUserNumber(String userNumber);
+
+    List<User> selectAll();
 }

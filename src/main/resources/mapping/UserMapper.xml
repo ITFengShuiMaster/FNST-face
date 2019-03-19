@@ -130,4 +130,8 @@
     from user
     where id = #{userNumber}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * FROM user;
+  </select>
 </mapper>

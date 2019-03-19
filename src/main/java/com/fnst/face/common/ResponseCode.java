@@ -29,7 +29,8 @@ public enum ResponseCode {
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
 
     /* 数据错误：50001-599999 */
-    RESULE_DATA_NONE(50001, "数据未找到");
+    RESULE_DATA_NONE(50001, "数据未找到"),
+    RESULE_DATA_REPEAT(50002, "数据已添加，请勿重复添加");
 
     private Integer code;
 

@@ -1,8 +1,19 @@
-package com.fnst.face.entity;
+package com.fnst.face.VO;
+
+import com.fnst.face.entity.User;
 
 import java.util.Date;
 
-public class MeetingUser extends MeetingUserKey {
+/**
+ * @author Luyue
+ * @date 2019/3/19 10:58
+ **/
+public class UserVO {
+
+    private User user;
+
+    private String onLineImgUrl;
+
     private Boolean isAttend;
 
     private Boolean isVisited;
@@ -11,7 +22,21 @@ public class MeetingUser extends MeetingUserKey {
 
     private Date createTime;
 
-    private String imgUrl;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getOnLineImgUrl() {
+        return onLineImgUrl;
+    }
+
+    public void setOnLineImgUrl(String onLineImgUrl) {
+        this.onLineImgUrl = onLineImgUrl;
+    }
 
     public Boolean getIsAttend() {
         return isAttend;
@@ -43,13 +68,5 @@ public class MeetingUser extends MeetingUserKey {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
     }
 }

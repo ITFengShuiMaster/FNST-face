@@ -1,13 +1,9 @@
 package com.fnst.face.util;
 
-import com.fnst.face.common.CommonVar;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

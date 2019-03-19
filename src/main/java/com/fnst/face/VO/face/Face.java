@@ -1,4 +1,4 @@
-package com.fnst.face.VO;
+package com.fnst.face.VO.face;
 
 import java.util.List;
 
