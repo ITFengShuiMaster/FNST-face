@@ -4,6 +4,7 @@ import com.fnst.face.common.ResponseCode;
 import com.fnst.face.common.ServerResponse;
 import com.fnst.face.entity.User;
 import com.fnst.face.mapper.UserMapper;
+import com.fnst.face.service.async.ImgToFaceTokenAsync;
 import com.fnst.face.util.DateTimeUtil;
 import com.fnst.face.util.FTPFileUploadUtil;
 import com.google.common.collect.Lists;
@@ -35,6 +36,8 @@ public class UserService {
     private UserMapper userMapper;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private ImgToFaceTokenAsync imgToFaceTokenAsync;
 
     public ServerResponse deleteUser(Long id) {
         if (id == null) {
@@ -93,6 +96,7 @@ public class UserService {
             return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
         }
 
+        imgToFaceTokenAsync.imgToFaceToken(user, user.getImgUrl());
         return ServerResponse.success();
     }
 

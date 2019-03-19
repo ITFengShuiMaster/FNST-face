@@ -19,6 +19,8 @@ public class User {
 
     private Date createTime;
 
+    private String faceToken;
+
     private MultipartFile imgFile;
 
     public Long getId() {
@@ -83,5 +85,13 @@ public class User {
 
     public void setImgFile(MultipartFile imgFile) {
         this.imgFile = imgFile;
+    }
+
+    public String getFaceToken() {
+        return faceToken;
+    }
+
+    public void setFaceToken(String faceToken) {
+        this.faceToken = faceToken;
     }
 }

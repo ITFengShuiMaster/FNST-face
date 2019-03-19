@@ -11,6 +11,7 @@ import com.fnst.face.mapper.MeetingMapper;
 import com.fnst.face.mapper.MeetingUserMapper;
 import com.fnst.face.mapper.UserMapper;
 import com.fnst.face.util.Base64ImageUtil;
+import com.fnst.face.util.DateTimeUtil;
 import com.fnst.face.util.FaceCompareUtil;
 import com.fnst.face.util.JsonUtil;
 import com.google.common.collect.Lists;
@@ -113,25 +114,28 @@ public class UserMeetingService {
         return ServerResponse.success();
     }
 
-    public ServerResponse signIn(String path, String imgBase64_2, Long meetingId) {
+    public ServerResponse signIn(String path, String onlineImgFaceToken, String onlineImgFaceBase64_2, Long meetingId) {
+        long start = System.nanoTime();
+
         List<User> users = userMapper.selectAll();
         List<MeetingUser> lists = meetingUserMapper.selectByMeetingId(meetingId);
-        List<UserVO> userVOS = listRealUser(lists);
 
-        return checkUser(path, imgBase64_2, userVOS, users);
+        long end = System.nanoTime();
+        System.out.println("数据库查询++++++++++++++  " + (end - start) / 100000000);
+        return checkUser(path, onlineImgFaceToken, users, lists, meetingId, onlineImgFaceBase64_2);
     }
 
-    private ServerResponse checkUser(String path, String imgBase64_2, List<UserVO> userVOS, List<User> users) {
+    private ServerResponse checkUser(String path, String onlineImgFaceToken, List<User> users, List<MeetingUser> lists, Long meetingId, String onlineImgFaceBase64_2) {
         Double confidence = null;
         UserVO realUserVO = new UserVO();
 
+        long start = System.nanoTime();
         for (User user : users) {
-            String imgBase64_1 = Base64ImageUtil.imageToBase64ByOnline(user.getImgUrl());
-            String resJson = FaceCompareUtil.compare(imgBase64_1, imgBase64_2);
+            String resJson = FaceCompareUtil.compareByToken(user.getFaceToken(), onlineImgFaceToken);
             Face face = JsonUtil.json2Object(resJson, Face.class);
 
             if (face.getConfidence() == null) {
-                return ServerResponse.failure(ResponseCode.FACE_ERROR);
+                continue;
             }
 
             if (confidence == null) {
@@ -143,32 +147,53 @@ public class UserMeetingService {
                     realUserVO.setUser(user);
                 }
             }
+
+            if (confidence != null && confidence > CommonVar.CONFIDENCE_RES) {
+                break;
+            }
         }
 
         if (confidence == null || confidence < CommonVar.CONFIDENCE_RES) {
             return ServerResponse.failure(ResponseCode.FACE_NONE_IN_FNST);
         }
 
+        long end = System.nanoTime();
+        System.out.println("人脸识别++++++++++++++  " + (end - start) / 100000000);
+
+        start = System.nanoTime();
         // 判断是否是访客
-        for (UserVO userVO : userVOS) {
-            if (userVO.getUser().getJobNumber().equals(realUserVO.getUser().getJobNumber()) && !userVO.getMeetingUser().getIsAttend()) {
-                userVO.getMeetingUser().setIsAttend(true);
-                String fileName = fileService.saveImgFile(imgBase64_2, path);
-                if (!StringUtils.isBlank(fileName)) {
-                    userVO.getMeetingUser().setImgUrl(imgPath + fileName);
+        boolean flagToIsVisited = false;
+        String fileName = DateTimeUtil.dateToStr(new Date()) + "-online.jpg";
+        for (MeetingUser mUser : lists) {
+            if (mUser.getUserId().equals(realUserVO.getUser().getId())) {
+                flagToIsVisited = true;
+                if (!mUser.getIsAttend()) {
+                    // 判断是否已签到
+                    mUser.setIsAttend(true);
+                    // 保存实时图片
+                    fileService.saveImgFile(onlineImgFaceBase64_2, path, fileName);
+                    if (!StringUtils.isBlank(fileName)) {
+                        mUser.setImgUrl(imgPath + fileName);
+                    }
+                    realUserVO.setMeetingUser(mUser);
+                    meetingUserMapper.updateByPrimaryKeySelective(mUser);
                 }
-                realUserVO.setMeetingUser(userVO.getMeetingUser());
-                meetingUserMapper.updateByPrimaryKeySelective(userVO.getMeetingUser());
-            } else if (!userVO.getUser().getJobNumber().equals(realUserVO.getUser().getJobNumber())){
-                MeetingUser meetingUser = initMeetingUser(userVO.getMeetingUser().getMeetingId(), realUserVO.getUser().getId());
-                String fileName = fileService.saveImgFile(path, imgBase64_2);
-                if (!StringUtils.isBlank(fileName)) {
-                    meetingUser.setImgUrl(imgPath + fileName);
-                }
-                realUserVO.setMeetingUser(meetingUser);
-                meetingUserMapper.insert(meetingUser);
+                break;
             }
         }
+        if (!flagToIsVisited) {
+            // 判断是否是访客
+            MeetingUser meetingUser = initMeetingUser(meetingId, realUserVO.getUser().getId());
+            // 保存实时图片
+            fileService.saveImgFile(path, onlineImgFaceBase64_2, fileName);
+            if (!StringUtils.isBlank(fileName)) {
+                meetingUser.setImgUrl(imgPath + fileName);
+            }
+            realUserVO.setMeetingUser(meetingUser);
+            meetingUserMapper.insert(meetingUser);
+        }
+        end = System.nanoTime();
+        System.out.println("判断是否签到++++++++++++++  " + (end - start) / 100000000);
 
         return ServerResponse.success(realUserVO);
     }

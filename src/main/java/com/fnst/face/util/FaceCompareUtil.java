@@ -92,6 +92,106 @@ public class FaceCompareUtil {
         return null;
     }
 
+    public static String compareByUrl(String imgUrl1, String imgBase64_2) {
+        String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("api_key", apiKey);
+        map.put("api_secret", apiSecreat);
+        map.put("image_url1", imgUrl1);
+        map.put("image_base64_2", imgBase64_2);
+
+        String result = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+
+        // post请求携带的参数entity
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        for(Map.Entry<String,String> entry : map.entrySet()) {
+            pairs.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+        }
+
+        CloseableHttpResponse response = null;
+        try {
+            post.setEntity(new UrlEncodedFormEntity(pairs,"UTF-8"));
+            response = httpClient.execute(post);
+            if(response != null && response.getStatusLine().getStatusCode() == 200)
+            {
+                HttpEntity entity = response.getEntity();
+                result = entityToString(entity);
+            }
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                httpClient.close();
+                if(response != null)
+                {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return null;
+    }
+
+    public static String compareByToken(String imgToken1, String imgToken2) {
+        String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("api_key", apiKey);
+        map.put("api_secret", apiSecreat);
+        map.put("face_token1", imgToken1);
+        map.put("face_token2", imgToken2);
+
+        String result = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+
+        // post请求携带的参数entity
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        for(Map.Entry<String,String> entry : map.entrySet()) {
+            pairs.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+        }
+
+        CloseableHttpResponse response = null;
+        try {
+            post.setEntity(new UrlEncodedFormEntity(pairs,"UTF-8"));
+            response = httpClient.execute(post);
+            if(response != null && response.getStatusLine().getStatusCode() == 200)
+            {
+                HttpEntity entity = response.getEntity();
+                result = entityToString(entity);
+            }
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                httpClient.close();
+                if(response != null)
+                {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return null;
+    }
+
     /** HTTPClient返回值解析
      *@author  卢越
      *@date  2019/3/18

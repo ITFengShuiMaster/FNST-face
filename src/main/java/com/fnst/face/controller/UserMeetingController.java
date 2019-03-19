@@ -38,8 +38,8 @@ public class UserMeetingController {
     }
 
     @PostMapping("/signIn/{meetingId}")
-    public ServerResponse signIn(String onlineImgBase64, @PathVariable Long meetingId,  HttpServletRequest request) {
+    public ServerResponse signIn(String onlineImgFaceToken, String onlineImgFaceBase64_2, @PathVariable Long meetingId,  HttpServletRequest request) {
         String path = request.getSession().getServletContext().getRealPath("upload");
-        return userMeetingService.signIn(path, onlineImgBase64, meetingId);
+        return userMeetingService.signIn(path, onlineImgFaceToken, onlineImgFaceBase64_2, meetingId);
     }
 }

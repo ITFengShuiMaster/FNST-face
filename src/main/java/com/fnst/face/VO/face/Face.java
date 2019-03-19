@@ -8,30 +8,11 @@ import java.util.List;
  **/
 public class Face {
 
-    private List<FaceRectangleVO> faces1;
-    private List<FaceRectangleVO> faces2;
     private Integer time_used;
-    private Thresholds thresholds;
     private Double confidence;
     private String image_id2;
     private String image_id1;
     private String request_id;
-
-    public List<FaceRectangleVO> getFaces1() {
-        return faces1;
-    }
-
-    public void setFaces1(List<FaceRectangleVO> faces1) {
-        this.faces1 = faces1;
-    }
-
-    public List<FaceRectangleVO> getFaces2() {
-        return faces2;
-    }
-
-    public void setFaces2(List<FaceRectangleVO> faces2) {
-        this.faces2 = faces2;
-    }
 
     public Integer getTime_used() {
         return time_used;
@@ -39,14 +20,6 @@ public class Face {
 
     public void setTime_used(Integer time_used) {
         this.time_used = time_used;
-    }
-
-    public Thresholds getThresholds() {
-        return thresholds;
-    }
-
-    public void setThresholds(Thresholds thresholds) {
-        this.thresholds = thresholds;
     }
 
     public Double getConfidence() {

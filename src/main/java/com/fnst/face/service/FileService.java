@@ -4,6 +4,7 @@ import com.fnst.face.util.Base64ImageUtil;
 import com.fnst.face.util.DateTimeUtil;
 import com.fnst.face.util.FTPFileUploadUtil;
 import com.google.common.collect.Lists;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,33 +19,34 @@ import java.util.Date;
 @Service
 public class FileService {
 
-    public String saveImgFile(String imgStr, String path) {
+    @Async
+    public void saveImgFile(String imgStr, String path, String fileName) {
         File fileDir = new File(path);
         if (!fileDir.exists()) {
             fileDir.setWritable(true);
             fileDir.mkdirs();
         }
 
-        String fileName = DateTimeUtil.dateToStr(new Date()) + "-online.jpg";
+//        String fileName = DateTimeUtil.dateToStr(new Date()) + "-online.jpg";
         File targetFile = new File(path, fileName);
 
         if (!Base64ImageUtil.Base64ToImage(imgStr, targetFile)) {
-            return null;
+//            return null;
         }
 
         try {
             // 将图片上传至ftp服务器
             if (!FTPFileUploadUtil.ftpUpload(Lists.newArrayList(targetFile))) {
-                return null;
+//                return null;
             }
 
             //删除本地图片
             targetFile.delete();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+//            return null;
         }
-        return targetFile.getName();
+//        return targetFile.getName();
     }
 
     public String saveImgFile(MultipartFile file, String path) {

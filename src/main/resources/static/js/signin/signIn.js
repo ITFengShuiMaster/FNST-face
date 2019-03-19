@@ -36,7 +36,7 @@ function takePhoto() {
         success: function (data) {
             console.log(data);
             if (data.faces.length !== 0) {
-                haveFaceAndAjax(baseStr);
+                haveFaceAndAjax(data.faces[0].face_token, baseStr);
             }
         },
         error: function (data) {
@@ -45,22 +45,23 @@ function takePhoto() {
     });
 }
 
-function haveFaceAndAjax(imgData) {
+function haveFaceAndAjax(faceToken, bStr) {
     $.ajax({
         url: "http://127.0.0.1:8080/u_meeting//signIn/2",
         type: "POST",
         dataType: "json",
         data: {
-            onlineImgBase64: imgData
+            onlineImgFaceToken: faceToken,
+            onlineImgFaceBase64_2: bStr
         },
         success: function (data) {
             console.log(data);
-            if (data.code == 1 && data.meetingUser !== null) {
-
+            if (data.code == 1 && data.data.meetingUser !== null) {
+                console.log("未签到");
                 $("#u_id").html(data.data.user.jobNumber);
                 $("#u_name").html(data.data.user.name);
                 displayNow(1);
-            } else if (data.meetingUser == null) {
+            } else if (data.data.meetingUser == null) {
                 console.log("已簽到");
                 displayNow(2);
             } else {
