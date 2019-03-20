@@ -1,6 +1,6 @@
 {
   "total": 8,
-  "rows":[
+  "data":[
     {"id": 1, "jobNumber": "21106", "name": "ll", "sex": true},
     {"id": 2, "jobNumber": "1232", "name": "ww", "sex": true},
     {"id": 3, "jobNumber": "020001", "name": "test1", "sex": true},
@@ -11,3 +11,28 @@
     {"id": 22, "jobNumber": "021020", "name": "黄忠", "sex": true}
   ]
 }
+
+<tbody>
+<tr>
+  <td style="text-align:right">姓名:</td>
+<td>
+  <input id="name" class="easyui-textbox textbox-f" type="text" value="" data-options="required:true" textboxname="name" style="display: none;">
+  <span class="textbox" style="width: 173px;">
+  <input id="_easyui_textbox_input1" type="text" class="textbox-text validatebox-text" autocomplete="off" tabindex="" placeholder="" title="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 28px; line-height: 28px; width: 171px;">
+  <input type="hidden" class="textbox-value" name="name" value="asdasf"></span></td>
+</tr>
+<tr>
+<td style="text-align:right">性别:</td>
+<td><input id="sex" class="easyui-textbox textbox-f" type="text" value="" data-options="required:true" textboxname="sex" style="display: none;"><span class="textbox" style="width: 173px;"><input id="_easyui_textbox_input2" type="text" class="textbox-text validatebox-text" autocomplete="off" tabindex="" placeholder="" title="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 28px; line-height: 28px; width: 171px;"><input type="hidden" class="textbox-value" name="sex" value="safas"></span></td>
+</tr>
+<tr>
+<td style="text-align:right">工号:</td>
+<td><input id="jobNumber" class="easyui-textbox textbox-f" type="text" value="" data-options="required:true" textboxname="jobNumber" style="display: none;"><span class="textbox" style="width: 173px;"><input id="_easyui_textbox_input3" type="text" class="textbox-text validatebox-text" autocomplete="off" tabindex="" placeholder="" title="" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; height: 28px; line-height: 28px; width: 171px;"><input type="hidden" class="textbox-value" name="jobNumber" value="fasf"></span></td>
+</tr>
+
+
+<tr>
+<td><a href="javascript:void(0);" onclick="save();" class="easyui-linkbutton l-btn l-btn-small l-btn-focus" data-options="iconCls:'icon-save'" group="" id=""><span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">保存</span><span class="l-btn-icon icon-save">&nbsp;</span></span></a></td>
+<td><a href="javascript:void(0);" onclick="cancel()" class="easyui-linkbutton l-btn l-btn-small" data-options="iconCls:'icon-cross'" group="" id=""><span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">取消</span><span class="l-btn-icon icon-cross">&nbsp;</span></span></a></td>
+</tr>
+</tbody>

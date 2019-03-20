@@ -30,7 +30,7 @@ public class MeetingController {
 	public String list() {
 		ServerResponse sr = meetingService.listMeeting();
 		EasyUIResponse<Meeting> response = new EasyUIResponse<>();
-		List<Meeting> rows = (List<Meeting>)sr.getData();
+		List<Meeting> rows = (List<Meeting>)sr.getRows();
 		response.setList(rows);
 		response.setTotal(rows.size());
 		return JsonUtil.objToJson(response).replace("list", "rows");

@@ -30,13 +30,6 @@ public class UserMeetingController {
         return userMeetingService.insertUserInMeeting(meetingUser);
     }
 
-    @PostMapping("/test")
-    public ServerResponse testImg(MultipartFile file, String text) {
-        int b = 1;
-        int a = 1;
-        return ServerResponse.success();
-    }
-
     @PostMapping("/signIn/{meetingId}")
     public ServerResponse signIn(String onlineImgFaceToken, String onlineImgFaceBase64_2, @PathVariable Long meetingId,  HttpServletRequest request) {
         String path = request.getSession().getServletContext().getRealPath("upload");
