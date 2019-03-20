@@ -1,5 +1,7 @@
 
-
+$(function(){
+    alert($('#param').val());
+});
 
 function save(){
     if (!$("#meetingform").form("validate")){

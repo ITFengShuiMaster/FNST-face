@@ -34,7 +34,7 @@ $(function() {
 				width : 80,
 				formatter: function(value,row,index){
 					
-						return "<button class='btn btn-success btn-xs' data-toggle='modal' data-target='#changeChar'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteChar'>删除</button>"
+						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details(row.id);'>考勤信息</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteChar'>删除</button>"
 					
 					
 				}
@@ -77,5 +77,18 @@ function addmeeting() {
 
 }
 
+function details(id){
 
+	$('#meetingdetails').dialog({
+		title: "新增会议",
+
+		width:800,
+		height:600,
+		closed: false,
+		cache: false,
+		modal: true,
+		href:"./meeting_details.html"
+	});
+
+}
 

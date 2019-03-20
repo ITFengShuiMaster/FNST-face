@@ -34,7 +34,7 @@ $(function() {
                 width : 80,
                 formatter: function(value,row,index){
 
-                    return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>添加</a>";
+                    return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=add("+row.id+");>添加</a>";
 
 
                 }
