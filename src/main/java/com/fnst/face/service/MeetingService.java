@@ -30,18 +30,18 @@ public class MeetingService {
 			return ServerResponse.failure("参数不全或参数错误");
 		}
 		try {
-            if (meetingMapper.insertReturnId(meeting) <= 0) {
-                return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
-        }
+			if (meetingMapper.insert(meeting) <= 0) {
+				return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
+		}
 		return ServerResponse.success();
 	}
 	
-	public ServerResponse deleteMeeting(Meeting meeting) {
-		if (meetingMapper.deleteByPrimaryKey(meeting.getId()) <= 0) {
+	public ServerResponse deleteMeeting(Long id) {
+		if (meetingMapper.deleteByPrimaryKey(id) <= 0) {
 			return ServerResponse.failure(ResponseCode.PARAM_IS_INVALID);
 		}
 		return ServerResponse.success();
@@ -66,12 +66,12 @@ public class MeetingService {
 		if (StringUtils.isBlank(meeting.getName())) {
 			return false;
 		}
-		
+
 		if (null == meeting.getMeetingTime() || meeting.getMeetingTime().before(new Date()) ) {
 			return false;
 		}
-		meeting.setCreateTime(new Date());
 		meeting.setUpdateTime(new Date());
+		meeting.setCreateTime(new Date());
 		return true;
 	}
 }

@@ -33,15 +33,7 @@
         <!--</tr>-->
         <tr>
             <td style="text-align:right">会议时间:</td>
-            <td><input class="easyui-datebox" id="date" name="meetingTime" value="" data-options="required:true"/></td>
-        </tr>
-        <tr>
-            <td style="text-align:right">更新时间:</td>
-            <td><input class="easyui-datebox" id="date" name="updateTime" value="" data-options="required:true"/></td>
-        </tr>
-        <tr>
-            <td style="text-align:right">创建时间:</td>
-            <td><input class="easyui-datebox" id="date" name="createTime" value="" data-options="required:true"/></td>
+            <td><input class="easyui-datetimebox" id="date" name="meetingTime" value="" data-options="required:true"/></td>
         </tr>
 
         <tr>
@@ -51,32 +43,31 @@
     </table>
 </form>
 <script>
-
-
     function save(){
         if (!$("#meetingform").form("validate")){
             $.messager.alert('提示', "红色区域为必填项。");
             return false;
         }
         $.ajax({
-            url : '',
+            url : '/meeting/add',
             type : 'post',
             dataType: "json",
             data : $("#meetingform").serialize(),
             beforeSend : function () {
+                console.log($("#meetingform").serialize());
                 $.messager.progress({
                     text : '正在保存中...,按Esc取消。'
                 });
             },
             success : function (data) {
                 $.messager.progress('close');
-                if (data.result=='true') {
+                if (data.code==1) {
                     $.messager.alert('提示', "保存成功！");
                     $("#meetinglist").datagrid("reload");
                     cancel();
                 }
                 else {
-                    $.messager.alert('提示', data.errorMessage);
+                    $.messager.alert('提示', data.message);
                 }
             }
         });

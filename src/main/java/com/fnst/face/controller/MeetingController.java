@@ -42,8 +42,14 @@ public class MeetingController {
 	}
 	
 	
-	@PostMapping
+	@PostMapping("/add")
     public ServerResponse create(Meeting meeting) {
-        return meetingService.insertMeeting(meeting);
+		return meetingService.insertMeeting(meeting);
     }
+
+    @RequestMapping("/delete")
+    public ServerResponse delete(@RequestParam("id") Long id){
+
+		return meetingService.deleteMeeting(id);
+	}
 }

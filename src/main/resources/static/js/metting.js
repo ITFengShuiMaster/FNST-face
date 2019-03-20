@@ -20,23 +20,20 @@ $(function() {
 				field : 'meetingTime',
 				title : '会议日期',
 				width : 60,
-				formatter:function(value,row,index){
-					if(value==undefined){
-						return '';
-					}else{
-						return parseToDate(value).format("yyyy-MM-dd");
-					}
-				}
+//				formatter:function(value,row,index){
+//                 					if(value==undefined){
+//                 						return '';
+//                 					}else{
+////                 						return parseToDate(value).format("yyyy-MM-dd");
+//                 					}
+//                 				}
 			},		
 			{
 				field : 'id',     //"<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-					
-						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details(row.id);'>考勤信息</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteChar'>删除</button>"
-					
-					
+						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details("+row.id+");'>考勤信息</button><button class='btn btn-danger btn-xs' data-toggle='modal'onclick='deleteMeeting("+row.id+")'>删除</button>"
 				}
 			}
 		]],		
@@ -48,6 +45,7 @@ $(function() {
 		
 	});
 });
+
 
 function search(){
 	params={};
@@ -67,14 +65,13 @@ function addmeeting() {
 	$('#meetingdlog').dialog({
 		title: "新增会议",
 		iconCls:'icon-add-new',
-		width:400,
-		height:400,
+		width:300,
+		height:200,
 		closed: false,
 		cache: false,
 		modal: true,
 		href:"./addmeeting.html"
 	});
-
 }
 
 function details(id){
@@ -89,6 +86,29 @@ function details(id){
 		modal: true,
 		href:"./meeting_details.html"
 	});
+}
+
+function deleteMeeting(id){
+    $.ajax({
+                url : '/meeting/delete?id='+id,
+                type : 'get',
+                beforeSend : function () {
+                    $.messager.progress({
+                        text : '正在删除...,按Esc取消。'
+                    });
+                },
+                success : function (data) {
+                    console.log(data);
+                    $.messager.progress('close');
+                    if (data.code==1) {
+                        $.messager.alert('提示', "删除成功！");
+                        $("#meetinglist").datagrid("reload");
+                    }
+                    else {
+                        $.messager.alert('提示', data.message);
+                    }
+                }
+            });
 
 }
 
