@@ -70,13 +70,6 @@ function meetingAttendance(meetingId){
     		closed: false,
     		cache: false,
     		modal: true
-<<<<<<< HEAD
-//    		onOpen:function(){
-//    		   var tool =  document.getElementById("tool");
-//    		   tool.innerHTML = "添加";
-//    		}
-=======
->>>>>>> origin/xyq
     });
     $('#participants').datagrid({
             url : '/u_meeting/'+meetingId,
@@ -160,7 +153,6 @@ function deleteMeeting(id){
             });
 
 }
-
 function addparts(id){
 
 	$('#addparticipants').dialog({
@@ -174,8 +166,8 @@ function addparts(id){
 		queryParams: { "id":id},
 		href:"/addParticipants.html"
 	});
+}
 
 function mtreLoad(){
 	$("#meetinglist").datagrid("reload");
-
 }
