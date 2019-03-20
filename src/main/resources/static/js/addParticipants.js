@@ -1,7 +1,11 @@
 $(function() {
-
+//    $('#add').datagrid({
+//        url : '/employee.json/',
+//    var obj=$('#addparticipants').dialog('options');
+//    var queryParams = obj["queryParams"];
+//    var id =  queryParams["id"];
     $('#add').datagrid({
-        url : '/employee.json/',
+        url : '/u_meeting/'+id,
         method:'get',
         title : '',
         striped : true,
@@ -21,8 +25,6 @@ $(function() {
                 field : 'jobNumber',
                 title : '工号',
                 width : 60,
-
-
             },
             {
                 field : 'id',
@@ -38,9 +40,6 @@ $(function() {
                 }
             }
         ]],
-
-
-
     });
 });
 
@@ -61,12 +60,11 @@ function search(){
 function getQueryParam() {
     var obj = $('#addparticipants').dialog('options');
     var queryParams = obj["queryParams"];
-
-    return queryParams["id"];        }
+    return queryParams["id"];
+    }
 
 function addpart(meetingid,employeeid){
     console.log(meetingid,employeeid);
-
     $.ajax({
         url : '',
         type : '',
