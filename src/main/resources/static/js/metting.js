@@ -20,33 +20,20 @@ $(function() {
 			{
 				field : 'meetingTime',
 				title : '会议日期',
-<<<<<<< HEAD
-				width : 60,
-//				formatter:function(value,row,index){
-//                 					if(value==undefined){
-//                 						return '';
-//                 					}else{
-////                 						return parseToDate(value).format("yyyy-MM-dd");
-//                 					}
-//                 				}
-=======
-				width : 60
->>>>>>> origin/bsc
+
 			},		
 			{
 				field : 'id',     //"<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-<<<<<<< HEAD
-						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details("+row.id+");'>考勤信息</button><button class='btn btn-danger btn-xs' data-toggle='modal'onclick='deleteMeeting("+row.id+")'>删除</button>"
-=======
+
 
 
 						return "<button class='btn btn-success btn-xs'  onclick=addparts("+row.id+");>添加人员</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+")>考勤信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delmt("+row.id+")>删除</button>"
 					
 					
->>>>>>> origin/bsc
+
 				}
 			}
 		]],		
@@ -84,20 +71,30 @@ function addmeeting() {
 	});
 }
 
-function details(id){
+function details(id) {
 
-	$('#meetingdetails').dialog({
-		title: "考勤信息",
+	var inputObject =  window.parent.document.getElementById('frame');
+	var meetingID =  window.parent.document.getElementById('meetingID');
+	meetingID.value=id;
 
-		width:800,
-		height:600,
-		closed: false,
-		cache: false,
-		modal: true,
-		href:"./meeting_details.html"
-	});
+	inputObject.src = "./participants.html";
+	// console.log("ddd");
+	// console.log($('#frame').attr("src"));
+	// $('#frame').attr("src",'./participants.html');
+
+
+// 	$('#meetingdetails').dialog({
+// 		title: "考勤信息",
+//
+// 		width:800,
+// 		height:600,
+// 		closed: false,
+// 		cache: false,
+// 		modal: true,
+// 		href:"./meeting_details.html"
+// 	});
+// }
 }
-
 function deleteMeeting(id){
     $.ajax({
                 url : '/meeting/delete?id='+id,
