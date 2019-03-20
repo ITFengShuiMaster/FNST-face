@@ -1,7 +1,8 @@
 $(function() {
 
 	$('#employeelist').datagrid({
-		url : '/',
+		url : '/test.json',
+		method:'get',
 		title : '员工列表',
 		striped : true,
 		nowrap : true,
@@ -39,10 +40,7 @@ $(function() {
 			}
 		]],		
 		
-		pagination : true,
-		pageSize : 20,
-		pageList : [20, 30, 40],
-		pageNumber : 1,
+
 		
 	});
 });
