@@ -1,7 +1,7 @@
 $(function() {
 
 	$('#employeelist').datagrid({
-		url : '/test.json',
+		url : '/test.json/',
 		method:'get',
 		title : '员工列表',
 		striped : true,
@@ -32,8 +32,8 @@ $(function() {
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-					
-						return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
+
+					return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto("+row.src+")>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=remake("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delemp("+row.id+")>删除</button>"
 					
 					
 				}
@@ -73,3 +73,22 @@ function addemployee(){
 	});
 }
 
+function showPhoto(imgUrl){
+	$('#img').dialog({
+		title: "照片",
+		iconCls:'icon-add-new',
+		width:400,
+		height:400,
+		closed: false,
+		cache: false,
+		modal: true,
+		queryParams: { "imgUrl":imgUrl},
+		href:"./img.html"
+	});
+
+
+}
+function empreLoad(){
+	$("#employeelist").datagrid("reload");
+
+}
