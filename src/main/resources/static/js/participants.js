@@ -27,6 +27,7 @@ $(function() {
                 title : '性别',
                 width : 80
             },
+
             {
                 field : 'jobNumber',
                 title : '工号',
