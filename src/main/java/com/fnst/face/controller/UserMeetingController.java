@@ -1,13 +1,18 @@
 package com.fnst.face.controller;
 
+import com.fnst.face.VO.UserVO;
+import com.fnst.face.common.EasyUIResponse;
 import com.fnst.face.common.ServerResponse;
 import com.fnst.face.entity.MeetingUser;
+import com.fnst.face.entity.User;
 import com.fnst.face.service.UserMeetingService;
+import com.fnst.face.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Luyue
@@ -21,8 +26,12 @@ public class UserMeetingController {
     private UserMeetingService userMeetingService;
 
     @GetMapping("/{meetingId}")
-    public ServerResponse list(@PathVariable Long meetingId) {
-        return userMeetingService.listMeetingUser(meetingId);
+    public String list(@PathVariable Long meetingId) {
+        List<User> rows = (List<User>) userMeetingService.listOnlyUser(meetingId).getData();
+        EasyUIResponse<User> response = new EasyUIResponse<>();
+        response.setTotal(rows.size());
+        response.setList(rows);
+        return JsonUtil.objToJson(response).replace("list","rows");
     }
 
     @PostMapping

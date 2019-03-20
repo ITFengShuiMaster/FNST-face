@@ -17,7 +17,7 @@
     
 	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js" ></script>
-	<script src="js/metting.js"></script>
+	<script type="text/javascript" src="js/metting.js"></script>
 	
 	
   </head>
@@ -40,9 +40,6 @@
 
 
 				<a class="easyui-linkbutton" iconCls="icon-add" onclick="addmeeting();">添加</a>
-				<a class="easyui-linkbutton" iconCls="icon-add" onclick="">修改</a>
-				<a class="easyui-linkbutton" iconCls="icon-remove" onclick="">删除</a>				
-				<a class="easyui-linkbutton" iconCls="icon-reload"  onclick="">刷新</a>
 
 			</div>
 		</div>  
@@ -50,6 +47,10 @@
 	
 	<div id="meetingdlog"></div>
 	<div id="meetingdetails"></div>
+	<div id="meetingAttendance" >
+		<a id="tool" class="easyui-linkbutton" iconCls="icon-add" onclick="addMeetingMember();">添加</a>
+		<table id="participants"></table>
+	</div>
 </body>  
 </html>
 
