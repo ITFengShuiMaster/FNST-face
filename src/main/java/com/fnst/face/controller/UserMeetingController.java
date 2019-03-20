@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Luyue
  * @date 2019/3/18 16:02
@@ -33,5 +35,11 @@ public class UserMeetingController {
         int b = 1;
         int a = 1;
         return ServerResponse.success();
+    }
+
+    @PostMapping("/signIn/{meetingId}")
+    public ServerResponse signIn(String onlineImgFaceToken, String onlineImgFaceBase64_2, @PathVariable Long meetingId,  HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        return userMeetingService.signIn(path, onlineImgFaceToken, onlineImgFaceBase64_2, meetingId);
     }
 }

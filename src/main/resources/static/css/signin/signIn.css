@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    overflow: hidden;
+    width: 500px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+}
+
+.section_img {
+    float: left;
+    padding: 1.5px;
+    margin-right: 30px;
+    border: 2px solid gray;
+}
+
+.section_img img {
+    width: 200px;
+    height: 300px;
+    padding: 1.5px;
+    border: 2px solid gray;
+}
+
+.section_signin {
+    overflow: hidden;
+}
+
+.section_signin button, .section_signin .detail {
+    margin-bottom: 40px;
+}
+
+.section_signin button {
+    font-size: 20px;
+    width: 120px;
+    line-height: 25px;
+    padding: 2px 0;
+    color: #fff;
+    background-color: #9d9d9d;
+}
+
+.section_signin .detail div {
+    width: 120px;
+    height: 30px;
+    padding: 1px 2px;
+    font-size: 20px;
+    display: inline-block;
+    border: 2px solid gray;
+    background-color: #f0f0f0;
+}
+
+.section_signin .detail span {
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.section_signin span {
+    font-size: 45px;
+    font-weight: bolder;
+}
+
+.display_none {
+    display: none;
+}

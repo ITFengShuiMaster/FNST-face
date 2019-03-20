@@ -11,7 +11,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, job_number, name, sex, img_url, update_time, create_time
+    id, job_number, name, sex, img_url, update_time, create_time, face_token
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -26,10 +26,10 @@
   <insert id="insert" parameterType="com.fnst.face.entity.User" >
     insert into user (id, job_number, name, 
       sex, img_url, update_time, 
-      create_time)
+      create_time, face_token)
     values (#{id,jdbcType=BIGINT}, #{jobNumber,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=BIT}, #{imgUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{faceToken,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fnst.face.entity.User" >
     insert into user
@@ -55,6 +55,9 @@
       <if test="createTime != null" >
         create_time,
       </if>
+      <if test="faceToken != null">
+        face_token,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +80,9 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="faceToken != null">
+        #{faceToken,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -101,6 +107,9 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="faceToken != null">
+        face_token = #{faceToken,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -111,24 +120,25 @@
       sex = #{sex,jdbcType=BIT},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      face_token = #{faceToken,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <insert id="insertReturnId" useGeneratedKeys="true" keyProperty="userId" parameterType="com.fnst.face.entity.User">
+  <insert id="insertReturnId" useGeneratedKeys="true" keyProperty="id" parameterType="com.fnst.face.entity.User">
     insert into user (id, job_number, name,
       sex, img_url, update_time,
-      create_time)
+      create_time, face_token)
     values (#{id,jdbcType=BIGINT}, #{jobNumber,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
       #{sex,jdbcType=BIT}, #{imgUrl,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-      #{createTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{faceToken,jdbcType=VARCHAR})
   </insert>
 
   <select id="selectByUserNumber" parameterType="string" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user
-    where id = #{userNumber}
+    where job_number = #{userNumber}
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">

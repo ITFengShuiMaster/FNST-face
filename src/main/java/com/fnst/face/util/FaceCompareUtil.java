@@ -33,29 +33,6 @@ public class FaceCompareUtil {
     private static String apiKey = "-62uv_akklJjwoQuZawRjy-dbxoPhvWT";
     private static String apiSecreat = "CTTqho-9btsW-DVPJcLeCBIFHIt6LH_A";
 
-    /** 将图片转换为base64编码
-     *@return  String base64图片编码
-     *@author  卢越
-     *@date  2019/3/18
-     */
-    public static String imageToBase64ByLocal(String imgFile) {
-        InputStream is = null;
-        byte[] data = null;
-        // 读取图片字节数组
-        try {
-            is = new FileInputStream(imgFile);
-            data = new byte[is.available()];
-            is.read(data);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // 对字节数组Base64编码
-        BASE64Encoder encoder = new BASE64Encoder();
-        // 返回Base64编码过的字节数组字符串
-        return encoder.encode(data);
-    }
-
     /**  人脸图片比较，参数为base64编码
      *@param  imgBase64_1 待比较图片1的base64编码
      *@param imgBase64_2 待比较图片2的base64编码
@@ -65,7 +42,7 @@ public class FaceCompareUtil {
      *@author  卢越
      *@date  2019/3/18
      */
-    private static String compare(String imgBase64_1, String imgBase64_2) {
+    public static String compare(String imgBase64_1, String imgBase64_2) {
         String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
 
         HashMap<String, String> map = new HashMap<>();
@@ -73,6 +50,106 @@ public class FaceCompareUtil {
         map.put("api_secret", apiSecreat);
         map.put("image_base64_1", imgBase64_1);
         map.put("image_base64_2", imgBase64_2);
+
+        String result = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+
+        // post请求携带的参数entity
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        for(Map.Entry<String,String> entry : map.entrySet()) {
+            pairs.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+        }
+
+        CloseableHttpResponse response = null;
+        try {
+            post.setEntity(new UrlEncodedFormEntity(pairs,"UTF-8"));
+            response = httpClient.execute(post);
+            if(response != null && response.getStatusLine().getStatusCode() == 200)
+            {
+                HttpEntity entity = response.getEntity();
+                result = entityToString(entity);
+            }
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                httpClient.close();
+                if(response != null)
+                {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return null;
+    }
+
+    public static String compareByUrl(String imgUrl1, String imgBase64_2) {
+        String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("api_key", apiKey);
+        map.put("api_secret", apiSecreat);
+        map.put("image_url1", imgUrl1);
+        map.put("image_base64_2", imgBase64_2);
+
+        String result = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+
+        // post请求携带的参数entity
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        for(Map.Entry<String,String> entry : map.entrySet()) {
+            pairs.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
+        }
+
+        CloseableHttpResponse response = null;
+        try {
+            post.setEntity(new UrlEncodedFormEntity(pairs,"UTF-8"));
+            response = httpClient.execute(post);
+            if(response != null && response.getStatusLine().getStatusCode() == 200)
+            {
+                HttpEntity entity = response.getEntity();
+                result = entityToString(entity);
+            }
+            return result;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                httpClient.close();
+                if(response != null)
+                {
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return null;
+    }
+
+    public static String compareByToken(String imgToken1, String imgToken2) {
+        String url = "https://api-cn.faceplusplus.com/facepp/v3/compare";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("api_key", apiKey);
+        map.put("api_secret", apiSecreat);
+        map.put("face_token1", imgToken1);
+        map.put("face_token2", imgToken2);
 
         String result = null;
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -142,7 +219,7 @@ public class FaceCompareUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(compare(imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue1.jpg")
-                , imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue2.JPG")));
+//        System.out.println(compare(imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue1.jpg")
+//                , imageToBase64ByLocal("E:\\FNST\\face\\face\\src\\main\\resources\\static\\img\\luyue2.JPG")));
     }
 }

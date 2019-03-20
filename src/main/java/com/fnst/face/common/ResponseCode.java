@@ -30,7 +30,11 @@ public enum ResponseCode {
 
     /* 数据错误：50001-599999 */
     RESULE_DATA_NONE(50001, "数据未找到"),
-    RESULE_DATA_REPEAT(50002, "数据已添加，请勿重复添加");
+    RESULE_DATA_REPEAT(50002, "数据已添加，请勿重复添加"),
+
+    /*人脸识别异常: 60001-69999*/
+    FACE_ERROR(60001, "未检测到人脸"),
+    FACE_NONE_IN_FNST(60002, "非FNST员工");
 
     private Integer code;
 

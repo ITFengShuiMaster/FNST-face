@@ -115,7 +115,7 @@
       and user_id = #{userId,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByMeetingId" parameterType="Integer" resultMap="BaseResultMap">
+  <select id="selectByMeetingId" parameterType="Long" resultMap="BaseResultMap">
     SELECT * FROM meeting_user
     WHERE meeting_id=#{meetingId};
   </select>

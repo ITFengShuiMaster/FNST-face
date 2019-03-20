@@ -2,6 +2,12 @@ $(function() {
 
     $('#participants').datagrid({
         url : '/',
+        method:'post',
+        queryParams: {
+
+            name: 'easyui',
+            subject: 'datagrid'
+                        },
         title : '参会名单',
         striped : true,
         nowrap : true,
