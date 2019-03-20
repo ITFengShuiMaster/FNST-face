@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>照片</title>
+</head>
+<body>
+<div id="photo">
+    <img id="ff" style="height:99% ;width: 99%;" src="./photo.png"/>
+</div>
+
+
+<script>
+    (function(){
+        console.log(getQueryParam());
+        $('#ff').attr("src",getQueryParam());
+
+    })();
+    function getQueryParam() {
+        var obj = $('#img').dialog('options');
+        var queryParams = obj["queryParams"];
+
+        return queryParams["imgUrl"];        }
+</script>
+</body>
+</html>

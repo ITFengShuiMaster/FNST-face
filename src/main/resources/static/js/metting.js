@@ -1,7 +1,8 @@
 $(function() {
 
 	$('#meetinglist').datagrid({
-		url : '/meeting/list',
+		url : '/test.json/',
+		method:'get',
 		title : '会议列表',
 		striped : true,
 		nowrap : true,
@@ -19,32 +20,23 @@ $(function() {
 			{
 				field : 'meetingTime',
 				title : '会议日期',
-				width : 60,
-				formatter:function(value,row,index){
-					if(value==undefined){
-						return '';
-					}else{
-						return parseToDate(value).format("yyyy-MM-dd");
-					}
-				}
+				width : 60
 			},		
 			{
 				field : 'id',     //"<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-					
-						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details(row.id);'>考勤信息</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteChar'>删除</button>"
+
+
+						return "<button class='btn btn-success btn-xs'  onclick=addparts("+row.id+");>添加人员</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+")>考勤信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delmt("+row.id+")>删除</button>"
 					
 					
 				}
 			}
 		]],		
 		
-		pagination : true,
-		pageSize : 20,
-		pageList : [20, 30, 40],
-		pageNumber : 1,
+
 		
 	});
 });
@@ -80,7 +72,7 @@ function addmeeting() {
 function details(id){
 
 	$('#meetingdetails').dialog({
-		title: "新增会议",
+		title: "考勤信息",
 
 		width:800,
 		height:600,
@@ -92,3 +84,47 @@ function details(id){
 
 }
 
+function addparts(id){
+
+	$('#addparticipants').dialog({
+		title: "添加名单",
+
+		width:800,
+		height:650,
+		closed: false,
+		cache: false,
+		modal: true,
+		queryParams: { "id":id},
+		href:"/addParticipants.html"
+	});
+
+}
+function delmt(id){
+	$.ajax({
+		url : '',
+		type : '',
+		dataType: "json",
+		data : {"id":id},
+		beforeSend : function () {
+			$.messager.progress({
+				text : '正在删除中...,按Esc取消。'
+			});
+		},
+		success : function (data) {
+			$.messager.progress('close');
+			if (data.result=='true') {
+				$.messager.alert('提示', "删除成功！");
+				$("#meetinglist").datagrid("reload");
+				cancel();
+			}
+			else {
+				$.messager.alert('提示', data.errorMessage);
+			}
+		}
+	});
+
+}
+function mtreLoad(){
+	$("#meetinglist").datagrid("reload");
+
+}
