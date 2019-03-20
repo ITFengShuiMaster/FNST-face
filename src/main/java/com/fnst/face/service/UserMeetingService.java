@@ -72,6 +72,7 @@ public class UserMeetingService {
         return ServerResponse.success(listRealUser(lists));
     }
 
+
     private List<UserVO> listRealUser(List<MeetingUser> lists) {
         List<UserVO> userVOS = Lists.newArrayList();
         for (MeetingUser mUser : lists) {

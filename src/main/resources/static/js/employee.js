@@ -1,7 +1,7 @@
 $(function() {
 
 	$('#employeelist').datagrid({
-		url : '/test.json',
+		url : '/user/list',
 		method:'get',
 		title : '员工列表',
 		striped : true,
@@ -33,15 +33,10 @@ $(function() {
 				width : 80,
 				formatter: function(value,row,index){
 					
-						return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
-					
-					
+						return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>&nbsp<button class='btn btn-danger btn-xs'  onclick=deleteUser("+row.id+")>删除</button>";
 				}
 			}
 		]],		
-		
-
-		
 	});
 });
 
@@ -71,5 +66,28 @@ function addemployee(){
 		modal: true,
 		href:"./addemployee.html"
 	});
+}
+
+function deleteUser(id){
+    $.ajax({
+                    url : '/user/'+id,
+                    type : 'delete',
+                    beforeSend : function () {
+                        $.messager.progress({
+                            text : '正在删除...,按Esc取消。'
+                        });
+                    },
+                    success : function (data) {
+                        console.log(data);
+                        $.messager.progress('close');
+                        if (data.code==1) {
+                            $.messager.alert('提示', "删除成功！");
+                            $("#employeelist").datagrid("reload");
+                        }
+                        else {
+                            $.messager.alert('提示', data.message);
+                        }
+                    }
+                });
 }
 

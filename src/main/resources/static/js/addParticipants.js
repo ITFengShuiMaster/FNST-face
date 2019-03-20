@@ -1,15 +1,18 @@
 $(function() {
-
-    $('#addparticipants').datagrid({
-        url : '/',
-        title : '员工列表',
+    var obj=$('#addparticipants').dialog('options');
+    var queryParams = obj["queryParams"];
+    var id =  queryParams["id"];
+    $('#add').datagrid({
+        url : '/u_meeting/'+id,
+        method:'get',
+        title : '',
         striped : true,
         nowrap : true,
         rownumbers : true,
         fitColumns : true,
         fit:true,
         singleSelect:true,
-        toolbar:$("#toolbar"),
+        toolbar:$("#tb"),
         columns : [[
             {
                 field : 'name',
@@ -17,34 +20,26 @@ $(function() {
                 width : 80
             },
             {
-                field : 'idCard',
+                field : 'jobNumber',
                 title : '工号',
                 width : 60,
-                formatter:function(value,row,index){
-                    if(value==undefined){
-                        return '';
-                    }else{
-                        return parseToDate(value).format("yyyy-MM-dd");
-                    }
-                }
             },
             {
                 field : 'id',
                 title : '操作',
                 width : 80,
                 formatter: function(value,row,index){
-
-                    return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=add("+row.id+");>添加</a>";
-
+                    if(row.isadd==false) {
+                        return "<button class='btn btn-success btn-xs'  onclick=addpart(getQueryParam(),"+row.id+");>添加</button>";
+                    }else{
+                        return "<button class='btn btn-danger btn-xs'  onclick=delart(getQueryParam(),"+row.id+");>删除</button>"
+                    }
 
                 }
             }
         ]],
 
-        pagination : true,
-        pageSize : 20,
-        pageList : [20, 30, 40],
-        pageNumber : 1,
+
 
     });
 });
@@ -63,6 +58,66 @@ function search(){
     });
 
 }
+function getQueryParam() {
+    var obj = $('#addparticipants').dialog('options');
+    var queryParams = obj["queryParams"];
 
+    return queryParams["id"];        }
 
+function addpart(meetingid,employeeid){
+    console.log(meetingid,employeeid);
+
+    $.ajax({
+        url : '',
+        type : '',
+        dataType: "json",
+        data : {
+            'meetingid':meetingid,
+            'employeeid':employeeid
+        },
+        beforeSend : function () {
+            $.messager.progress({
+                text : '正在添加中...,按Esc取消。'
+            });
+        },
+        success : function (data) {
+            $.messager.progress('close');
+            if (data.result=='true') {
+                $.messager.alert('提示', "添加成功！");
+                $("#add").datagrid("reload");
+            }
+            else {
+                $.messager.alert('提示', data.errorMessage);
+            }
+        }
+    });
+}
+function delpart(meetingid,employeeid){
+    console.log(meetingid,employeeid);
+
+    $.ajax({
+        url : '',
+        type : '',
+        dataType: "json",
+        data : {
+            'meetingid':meetingid,
+            'employeeid':employeeid
+        },
+        beforeSend : function () {
+            $.messager.progress({
+                text : '正在删除...,按Esc取消。'
+            });
+        },
+        success : function (data) {
+            $.messager.progress('close');
+            if (data.result=='true') {
+                $.messager.alert('提示', "删除成功！");
+                $("#add").datagrid("reload");
+            }
+            else {
+                $.messager.alert('提示', data.errorMessage);
+            }
+        }
+    });
+}
 

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luyue
@@ -30,9 +33,13 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @GetMapping
-    public ServerResponse get() {
-        return userService.listUsers();
+    @GetMapping("/list")
+    public Map list() {
+        List<User> userList = (List<User>) userService.listUsers().getData();
+        Map<String,Object> map = new HashMap<>();
+        map.put("total",userList.size());
+        map.put("rows",userList);
+        return map;
     }
 
     @PutMapping
