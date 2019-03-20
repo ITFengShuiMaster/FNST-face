@@ -7,7 +7,7 @@ package com.fnst.face.common;
 public class ServerResponse {
     private Integer code;
     private String message;
-    private Object data;
+    private Object rows;
 
     public ServerResponse() {
     }
@@ -26,7 +26,7 @@ public class ServerResponse {
     public static ServerResponse success(Object data) {
         ServerResponse result = new ServerResponse();
         result.setResultCode(ResponseCode.SUCCESS);
-        result.setData(data);
+        result.setRows(data);
         return result;
     }
 
@@ -46,7 +46,7 @@ public class ServerResponse {
     public static ServerResponse failure(ResponseCode resultCode, Object data) {
         ServerResponse result = new ServerResponse();
         result.setResultCode(resultCode);
-        result.setData(data);
+        result.setRows(data);
         return result;
     }
 
@@ -76,11 +76,11 @@ public class ServerResponse {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
+    public Object getRows() {
+        return rows;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setRows(Object rows) {
+        this.rows = rows;
     }
 }

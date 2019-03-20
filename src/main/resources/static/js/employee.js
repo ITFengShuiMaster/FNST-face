@@ -1,7 +1,7 @@
 $(function() {
 
 	$('#employeelist').datagrid({
-		url : '/test.json/',
+		url : '/user',
 		method:'get',
 		title : '员工列表',
 		striped : true,

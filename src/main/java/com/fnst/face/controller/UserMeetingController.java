@@ -27,7 +27,7 @@ public class UserMeetingController {
 
     @GetMapping("/{meetingId}")
     public String list(@PathVariable Long meetingId) {
-        List<User> rows = (List<User>) userMeetingService.listOnlyUser(meetingId).getData();
+        List<User> rows = (List<User>) userMeetingService.listOnlyUser(meetingId).getRows();
         EasyUIResponse<User> response = new EasyUIResponse<>();
         response.setTotal(rows.size());
         response.setList(rows);
@@ -37,13 +37,6 @@ public class UserMeetingController {
     @PostMapping
     public ServerResponse addUserInMeeting(MeetingUser meetingUser) {
         return userMeetingService.insertUserInMeeting(meetingUser);
-    }
-
-    @PostMapping("/test")
-    public ServerResponse testImg(MultipartFile file, String text) {
-        int b = 1;
-        int a = 1;
-        return ServerResponse.success();
     }
 
     @PostMapping("/signIn/{meetingId}")

@@ -4,6 +4,5 @@
     {"id": 1,  "name": "ll", "meetingTime": "2019-3-20"},
     {"id": 2, "name": "ww", "meetingTime": "2019-3-20"},
     {"id": 3, "name": "test1", "meetingTime": "2019-3-20"}
-
   ]
 }
