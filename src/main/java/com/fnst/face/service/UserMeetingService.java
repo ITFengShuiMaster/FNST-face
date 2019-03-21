@@ -204,7 +204,7 @@ public class UserMeetingService {
         boolean flagToIsVisited = false;
         String fileName = DateTimeUtil.dateToStr(new Date()) + "-online.jpg";
         for (MeetingUser mUser : lists) {
-            if (mUser.getUserId().equals(realUserVO.getUser().getId())) {
+            if (mUser.getUserId().equals(realUserVO.getUser().getId()) && !mUser.getIsVisited()) {
                 flagToIsVisited = true;
                 if (!mUser.getIsAttend()) {
                     // 判断是否已签到
@@ -218,13 +218,15 @@ public class UserMeetingService {
                     meetingUserMapper.updateByPrimaryKeySelective(mUser);
                 }
                 break;
+            } else if (mUser.getUserId().equals(realUserVO.getUser().getId()) && mUser.getIsVisited()) {
+                flagToIsVisited = true;
             }
         }
         if (!flagToIsVisited) {
             // 判断是否是访客
             MeetingUser meetingUser = initMeetingUser(meetingId, realUserVO.getUser().getId());
             // 保存实时图片
-            fileService.saveImgFile(path, onlineImgFaceBase64_2, fileName);
+            fileService.saveImgFile(onlineImgFaceBase64_2, path, fileName);
             if (!StringUtils.isBlank(fileName)) {
                 meetingUser.setImgUrl(imgPath + fileName);
             }

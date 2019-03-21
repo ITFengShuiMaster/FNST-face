@@ -17,6 +17,7 @@ function takePhoto() {
     let video = document.getElementById("video");
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
+    let meetingId = $("#id").attr("value");
     ctx.drawImage(video, 0, 0, 200, 200);
 
     var imgData = canvas.toDataURL();
@@ -33,10 +34,15 @@ function takePhoto() {
             api_secret: "CTTqho-9btsW-DVPJcLeCBIFHIt6LH_A",
             image_base64: baseStr
         },
+        beforeSend : function () {
+            $.messager.progress({
+                text : '请稍后...'
+            });
+        },
         success: function (data) {
             console.log(data);
             if (data.faces.length !== 0) {
-                haveFaceAndAjax(data.faces[0].face_token, baseStr);
+                haveFaceAndAjax(data.faces[0].face_token, baseStr, meetingId);
             }
         },
         error: function (data) {
@@ -45,9 +51,9 @@ function takePhoto() {
     });
 }
 
-function haveFaceAndAjax(faceToken, bStr) {
+function haveFaceAndAjax(faceToken, bStr, meetingId) {
     $.ajax({
-        url: "http://127.0.0.1:8080/u_meeting//signIn/2",
+        url: "http://127.0.0.1:8080/u_meeting/signIn/" + meetingId,
         type: "POST",
         dataType: "json",
         data: {
@@ -56,15 +62,20 @@ function haveFaceAndAjax(faceToken, bStr) {
         },
         success: function (data) {
             console.log(data);
-            if (data.code == 1 && data.data.meetingUser !== null) {
+            if (data.code == 1 && data.rows.meetingUser !== null) {
+                $.messager.progress('close');
                 console.log("未签到");
-                $("#u_id").html(data.data.user.jobNumber);
-                $("#u_name").html(data.data.user.name);
+                $("#u_id").html(data.rows.user.jobNumber);
+                $("#u_name").html(data.rows.user.name);
                 displayNow(1);
-            } else if (data.data.meetingUser == null) {
+            } else if (data.rows.meetingUser == null) {
+                $.messager.progress('close');
                 console.log("已簽到");
+                $("#u_id").html(data.rows.user.jobNumber);
+                $("#u_name").html(data.rows.user.name);
                 displayNow(2);
             } else {
+                $.messager.progress('close');
                 // 顯示錯誤信息
 
             }
@@ -91,6 +102,8 @@ function displayNow(code) {
 
 function timeOutDO(atr) {
     setTimeout(function () {
+        $("#u_id").html("");
+        $("#u_name").html("");
         atr.attr("class", "display_none");
     }, 3000);
 }
