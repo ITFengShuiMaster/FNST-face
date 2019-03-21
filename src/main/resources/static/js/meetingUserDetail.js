@@ -15,18 +15,11 @@ function getList(){
     $.ajax({
         url: '/u_meeting/' + id,
         type: 'get',
-        beforeSend: function () {
-            $.messager.progress({
-                text: '正在获取参会人员信息...,'
-            });
-        },
         success: function (data) {
             console.log(data);
-            $.messager.progress('close');
+
             if (data.code == 1) {
                 doReturnData(data.rows);
-            } else {
-                $.messager.alert('提示', data.message);
             }
         }
     });
