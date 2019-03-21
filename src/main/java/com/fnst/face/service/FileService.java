@@ -60,7 +60,7 @@ public class FileService {
             fileDir.mkdirs();
         }
 
-        String fileName = DateTimeUtil.dateToStr(new Date()) + "-" + file.getOriginalFilename();
+        String fileName = DateTimeUtil.dateToStr(new Date()) + "-local.jpg";
         File targetFile = new File(path, fileName);
         // 将图片上传到FTP服务器
         try {
@@ -80,5 +80,7 @@ public class FileService {
         }
         return targetFile.getName();
     }
+
+
 
 }

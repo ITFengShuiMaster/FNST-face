@@ -67,7 +67,7 @@ public class MeetingService {
 			return false;
 		}
 
-		if (null == meeting.getMeetingTime() || meeting.getMeetingTime().before(new Date()) ) {
+		if (null == meeting.getMeetingTime() || !meeting.getMeetingTime().before(new Date()) ) {
 			return false;
 		}
 		meeting.setUpdateTime(new Date());
