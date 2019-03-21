@@ -1,4 +1,5 @@
 function getMedia() {
+
     let constraints = {
         video: { width: 500, height: 500 },
         audio: true
@@ -80,6 +81,8 @@ function displayNow(code) {
     if (code == 1) {
         $("#success").attr("class", "");
         timeOutDO($("#success"))
+        // getVideo(i);
+        $('#signinview').dialog()
     } else if (code == 2) {
         $("#again").attr("class", "");
         timeOutDO($("#again"))
@@ -96,5 +99,9 @@ function timeOutDO(atr) {
 }
 
 $(function () {
+    console.log($('#id').attr("value"));
+
     getMedia();
+
+
 })
