@@ -18,7 +18,9 @@ function takePhoto() {
     let video = document.getElementById("video");
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
-    let meetingId = $("#id").attr("value");
+    var meetingID = window.parent.document.getElementById('mid');
+    var id = meetingID.value;
+
     ctx.drawImage(video, 0, 0, 200, 225);
 
     var imgData = canvas.toDataURL();
@@ -39,13 +41,11 @@ function takePhoto() {
         success: function (data) {
             console.log(data);
             if (data.faces.length !== 0) {
-                haveFaceAndAjax(data.faces[0].face_token, baseStr, meetingId);
-            } else {
-                $.messager.progress('close');
+                haveFaceAndAjax(data.faces[0].face_token, baseStr, id);
             }
         },
         error: function (data) {
-            $.messager.progress('close');
+
             console.log(data);
         }
     });
@@ -94,7 +94,7 @@ function displayNow(code) {
         $("#success").attr("class", "");
         timeOutDO($("#success"))
         setTimeout(function () {
-            getList();
+            parent.getList();
         },2000)
 
         $('#signinview').dialog()

@@ -16,17 +16,17 @@ function getList(){
         url: '/u_meeting/' + id,
         type: 'get',
         beforeSend: function () {
-            $.messager.progress({
-                text: '正在获取参会人员信息...,'
-            });
+            // $.messager.progress({
+            //     text: '正在获取参会人员信息...,'
+            // });
         },
         success: function (data) {
             console.log(data);
-            $.messager.progress('close');
+            // $.messager.progress('close');
             if (data.code == 1) {
                 doReturnData(data.rows);
             } else {
-                $.messager.alert('提示', data.message);
+                // $.messager.alert('提示', data.message);
             }
         }
     });
@@ -38,12 +38,16 @@ function Signin() {
     // let id= $('#id').val();
     $('#signinview').dialog({
         title: "考勤",
-        width:600,
-        height:400,
+        width:700,
+        height:450,
         closed: false,
         cache: false,
         modal: true,
-        href:"./signIn.html"
+        href:"./temp.html",
+        onclose:function(){
+            alert();
+        }
+
     });
 
 }
