@@ -32,7 +32,7 @@ $(function() {
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-					return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto("+row.src+")>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=remake("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=deleteUser("+row.id+")>删除</button>"
+                    return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto('"+row.imgUrl+"')>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=remake("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=deleteUser("+row.id+")>删除</button>"
 				}
 			}
 		]],		
@@ -68,6 +68,7 @@ function addemployee(){
 }
 
 function showPhoto(imgUrl){
+	console.log(imgUrl);
 	$('#img').dialog({
 		title: "照片",
 		iconCls:'icon-add-new',
