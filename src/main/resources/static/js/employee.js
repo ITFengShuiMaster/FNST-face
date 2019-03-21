@@ -20,7 +20,14 @@ $(function() {
 			{
 				field : 'sex',
 				title : '性别',
-				width : 80
+				width : 80,
+                formatter: function(value,row,index){
+					if (row.sex) {
+						return "男";
+					} else {
+						return "女";
+					}
+                }
 			},
 			{
 				field : 'jobNumber',

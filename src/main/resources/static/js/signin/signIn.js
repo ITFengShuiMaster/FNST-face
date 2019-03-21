@@ -111,7 +111,7 @@ function timeOutDO(atr) {
     setTimeout(function () {
         $("#u_id").html("");
         $("#u_name").html("");
-        atr.attr("class", "display_none");
+        atr.attr("class", "signin_display_none");
     }, 3000);
 }
 
