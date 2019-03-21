@@ -1,7 +1,11 @@
 $(function () {
     var meetingID = window.parent.document.getElementById('meetingID');
+    var mName = window.parent.document.getElementById('meetingName');
+
     var id = meetingID.value;
+    var mn= mName.value;
     $('#id').attr("value", id);
+    $('#mname').text(mn);
     getList();
 
 });

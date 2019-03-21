@@ -28,7 +28,7 @@ $(function() {
 				width : 80,
 				formatter: function(value,row,index){
 					return "<button class='btn btn-success btn-xs'  onclick=addparts("+row.id+");>添加人员" +
-						"</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+")>考勤信息" +
+						"</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+",'"+row.name+"')>考勤信息" +
 						"</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delmt("+row.id+")>删除</button>"
 				}
 			}
@@ -63,10 +63,15 @@ function addmeeting() {
 		href:"./addmeeting.html"
 	});
 }
-function details(id) {
+function details(id,mname) {
+	console.log(mname);
 	var inputObject = window.parent.document.getElementById('frame');
 	var meetingID = window.parent.document.getElementById('meetingID');
+	var meetingName = window.parent.document.getElementById('meetingName');
+	console.log(mname);
 	meetingID.value = id;
+	meetingName.value=mname;
+
 	inputObject.src = "./meetingUserDetail.html";
 
 }
