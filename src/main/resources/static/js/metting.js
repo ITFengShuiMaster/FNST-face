@@ -63,75 +63,72 @@ function addmeeting() {
 		href:"./addmeeting.html"
 	});
 }
-function meetingAttendance(meetingId){
-    $('#meetingAttendance').dialog({
-    		title: "与会详情",
-    		iconCls:'icon-add-new',
-    		width:700,
-    		height:500,
-    		closed: false,
-    		cache: false,
-    		modal: true
-    });
-    $('#participants').datagrid({
-		url: '/u_meeting/' + meetingId,
-		method: 'get',
-		title: '参会名单',
-		striped: true,
-		nowrap: true,
-		rownumbers: true,
-		fitColumns: true,
-		fit: true,
-		singleSelect: true,
-//            toolbar:$("#toolbar"),
-		columns: [[
-			{
-				field: 'name',
-				title: '姓名',
-				width: 80
-			},
-			{
-				field: 'sex',
-				title: '性别',
-				width: 80
-			},
-
-			{
-				field: 'jobNumber',
-				title: '工号',
-				width: 60
-			},
-			{
-				field: 'id',
-				title: '操作',
-				width: 80,
-				formatter: function (value, row, index) {
-					return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail(" + row.id + ");>详细信息</a><button class='btn btn-danger btn-xs' data-toggle='modal'onclick='deleteMeeting(" + row.id + ")'>删除</button>";
-				}
-			}
-		]],
-
-		pagination: true,
-		pageSize: 20,
-		pageList: [20, 30, 40],
-		pageNumber: 1,
-	});
-	var inputObject =  window.parent.document.getElementById('frame');
-	var meetingID =  window.parent.document.getElementById('meetingID');
-	meetingID.value=id;
-
+function details(id) {
+	var inputObject = window.parent.document.getElementById('frame');
+	var meetingID = window.parent.document.getElementById('meetingID');
+	meetingID.value = id;
 	inputObject.src = "./meetingUserDetail.html";
 
-	$('#meetingdetails').dialog({
-		title: "考勤信息",
-		width:800,
-		height:600,
-		closed: false,
-		cache: false,
-		modal: true,
-		href:"./meeting_details.html"
-	});
 }
+//     $('#participants').datagrid({
+// 		url: '/u_meeting/' + meetingId,
+// 		method: 'get',
+// 		title: '参会名单',
+// 		striped: true,
+// 		nowrap: true,
+// 		rownumbers: true,
+// 		fitColumns: true,
+// 		fit: true,
+// 		singleSelect: true,
+// //            toolbar:$("#toolbar"),
+// 		columns: [[
+// 			{
+// 				field: 'name',
+// 				title: '姓名',
+// 				width: 80
+// 			},
+// 			{
+// 				field: 'sex',
+// 				title: '性别',
+// 				width: 80
+// 			},
+//
+// 			{
+// 				field: 'jobNumber',
+// 				title: '工号',
+// 				width: 60
+// 			},
+// 			{
+// 				field: 'id',
+// 				title: '操作',
+// 				width: 80,
+// 				formatter: function (value, row, index) {
+// 					return "<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail(" + row.id + ");>详细信息</a><button class='btn btn-danger btn-xs' data-toggle='modal'onclick='deleteMeeting(" + row.id + ")'>删除</button>";
+// 				}
+// 			}
+// 		]],
+//
+// 		pagination: true,
+// 		pageSize: 20,
+// 		pageList: [20, 30, 40],
+// 		pageNumber: 1,
+// 	});
+// 	var inputObject =  window.parent.document.getElementById('frame');
+// 	var meetingID =  window.parent.document.getElementById('meetingID');
+// 	meetingID.value=meetingId;
+//
+// 	inputObject.src = "./meetingUserDetail.html";
+
+	// $('#meetingdetails').dialog({
+	// 	title: "考勤信息",
+	// 	width:800,
+	// 	height:600,
+	// 	closed: false,
+	// 	cache: false,
+	// 	modal: true,
+	// 	href:"./meeting_details.html"
+	// });
+
 function deleteMeeting(id){
     $.ajax({
                 url : '/meeting/'+id,
