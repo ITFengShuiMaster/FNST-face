@@ -1,7 +1,7 @@
 $(function() {
 
 	$('#employeelist').datagrid({
-		url : '/employee.json',
+		url : '/user/list',
 		method:'get',
 		title : '员工列表',
 		striped : true,
@@ -32,16 +32,10 @@ $(function() {
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-
-					return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto("+row.src+")>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=modifyemp("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delemp("+row.id+")>删除</button>"
-					
-					
+					return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto("+row.src+")>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=remake("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=deleteUser("+row.id+")>删除</button>"
 				}
 			}
 		]],		
-		
-
-		
 	});
 });
 
@@ -130,4 +124,26 @@ function delemp(id){
 function empreLoad(){
 	$("#employeelist").datagrid("reload");
 
+}
+function deleteUser(id){
+    $.ajax({
+                    url : '/user/'+id,
+                    type : 'delete',
+                    beforeSend : function () {
+                        $.messager.progress({
+                            text : '正在删除...,按Esc取消。'
+                        });
+                    },
+                    success : function (data) {
+                        console.log(data);
+                        $.messager.progress('close');
+                        if (data.code==1) {
+                            $.messager.alert('提示', "删除成功！");
+                            $("#employeelist").datagrid("reload");
+                        }
+                        else {
+                            $.messager.alert('提示', data.message);
+                        }
+                    }
+                });
 }
