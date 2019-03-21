@@ -36,6 +36,10 @@ function takePhoto() {
             api_key: "-62uv_akklJjwoQuZawRjy-dbxoPhvWT",
             api_secret: "CTTqho-9btsW-DVPJcLeCBIFHIt6LH_A",
             image_base64: baseStr
+        },beforeSend : function () {
+            $.messager.progress({
+                text : '正在识别...,按Esc取消。'
+            });
         },
 
         success: function (data) {
@@ -62,7 +66,7 @@ function haveFaceAndAjax(faceToken, bStr, meetingId) {
         },
         success: function (data) {
 
-
+            $.messager.progress('close');
             console.log(data);
             if (data.code == 1 && data.rows.meetingUser !== null) {
                 // $.messager.progress('close');
