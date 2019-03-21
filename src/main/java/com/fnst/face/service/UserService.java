@@ -47,11 +47,11 @@ public class UserService {
             return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
         }
 
-        if (meetingUserMapper.deleteByUserId(id) <= 0) {
+        if (meetingUserMapper.deleteByUserId(id) < 0) {
             return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
 
-        if (userMapper.deleteByPrimaryKey(id) <= 0) {
+        if (userMapper.deleteByPrimaryKey(id) < 0) {
             return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
         return ServerResponse.success();

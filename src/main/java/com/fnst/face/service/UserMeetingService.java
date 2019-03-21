@@ -173,7 +173,7 @@ public class UserMeetingService {
             String resJson = FaceCompareUtil.compareByToken(user.getFaceToken(), onlineImgFaceToken);
             Face face = JsonUtil.json2Object(resJson, Face.class);
 
-            if (face.getConfidence() == null) {
+            if (face == null || face.getConfidence() == null) {
                 continue;
             }
 
