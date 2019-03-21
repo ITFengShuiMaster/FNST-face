@@ -25,6 +25,10 @@
     where meeting_id = #{meetingId,jdbcType=BIGINT}
       and user_id = #{userId,jdbcType=BIGINT}
   </delete>
+  <delete id="deleteByUserId" parameterType="Long">
+    delete from meeting_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
   <insert id="insert" parameterType="com.fnst.face.entity.MeetingUser" >
     insert into meeting_user (meeting_id, user_id, is_attend, 
       is_visited, update_time, create_time, 

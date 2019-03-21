@@ -3,6 +3,7 @@ package com.fnst.face.service;
 import com.fnst.face.common.ResponseCode;
 import com.fnst.face.common.ServerResponse;
 import com.fnst.face.entity.User;
+import com.fnst.face.mapper.MeetingUserMapper;
 import com.fnst.face.mapper.UserMapper;
 import com.fnst.face.service.async.ImgToFaceTokenAsync;
 import com.fnst.face.util.DateTimeUtil;
@@ -37,11 +38,17 @@ public class UserService {
     @Autowired
     private FileService fileService;
     @Autowired
+    private MeetingUserMapper meetingUserMapper;
+    @Autowired
     private ImgToFaceTokenAsync imgToFaceTokenAsync;
 
     public ServerResponse deleteUser(Long id) {
         if (id == null) {
             return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
+        }
+
+        if (meetingUserMapper.deleteByUserId(id) <= 0) {
+            return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
 
         if (userMapper.deleteByPrimaryKey(id) <= 0) {
@@ -105,7 +112,7 @@ public class UserService {
             return false;
         }
 
-        if (StringUtils.isBlank(user.getImgUrl())) {
+        if (user.getImgFile() == null) {
             return false;
         }
 

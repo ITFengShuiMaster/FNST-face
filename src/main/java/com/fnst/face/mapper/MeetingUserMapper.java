@@ -19,4 +19,6 @@ public interface MeetingUserMapper {
     int updateByPrimaryKey(MeetingUser record);
 
     List<MeetingUser> selectByMeetingId(Long meetingId);
+
+    int deleteByUserId(Long userId);
 }
