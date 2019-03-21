@@ -63,7 +63,7 @@ function addmeeting() {
 		href:"./addmeeting.html"
 	});
 }
-function meetingAttendance(meetingId){
+function details(meetingId){
     $('#meetingAttendance').dialog({
     		title: "与会详情",
     		iconCls:'icon-add-new',
@@ -118,7 +118,7 @@ function meetingAttendance(meetingId){
 	});
 	var inputObject =  window.parent.document.getElementById('frame');
 	var meetingID =  window.parent.document.getElementById('meetingID');
-	meetingID.value=id;
+	meetingID.value=meetingId;
 
 	inputObject.src = "./meetingUserDetail.html";
 

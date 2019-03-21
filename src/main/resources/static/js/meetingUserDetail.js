@@ -2,6 +2,8 @@ $(function () {
 
     var meetingID =  window.parent.document.getElementById('meetingID');
     var id=meetingID.value;
+    $('#id').attr("value",id);
+
     /* 获得会议id */
     var lists = [
         {
@@ -71,7 +73,7 @@ $(function () {
         meeting_visitors_details.append(meeting_visitor_detail);
     }
 })
-function Sigin(id) {
-
+function Sigin() {
+    let id= $('#id').val();
 
 }
