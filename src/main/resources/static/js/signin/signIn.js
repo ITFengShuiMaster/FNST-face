@@ -70,16 +70,15 @@ function haveFaceAndAjax(faceToken, bStr, meetingId) {
                 $("#u_id").html(data.rows.user.jobNumber);
                 $("#u_name").html(data.rows.user.name);
                 displayNow(1);
+            } else if (data.rows == null) {
+                displayNow(data.code);
+
             } else if (data.rows.meetingUser == null) {
                 // $.messager.progress('close');
                 console.log("已簽到");
                 $("#u_id").html(data.rows.user.jobNumber);
                 $("#u_name").html(data.rows.user.name);
                 displayNow(2);
-            } else {
-                // $.messager.progress('close');
-                // 顯示錯誤信息
-
             }
 
         },
@@ -102,8 +101,14 @@ function displayNow(code) {
         $("#again").attr("class", "");
         timeOutDO($("#again"))
     } else {
-        $("#fail").attr("class", "");
-        timeOutDO($("#fail"))
+        if (code == 60002) {
+            $("#noEplee").attr("class", "");
+            timeOutDO($("#noEplee"));
+        } else {
+            $("#fail").attr("class", "");
+            timeOutDO($("#fail"));
+        }
+
     }
 }
 
