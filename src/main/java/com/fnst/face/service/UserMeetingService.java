@@ -72,6 +72,23 @@ public class UserMeetingService {
         return ServerResponse.success(listRealUser(lists));
     }
 
+    public ServerResponse listOnlyUser(Long meetingId){
+        if (meetingId == null) {
+            return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
+        }
+
+        if (meetingMapper.selectByPrimaryKey(meetingId) == null) {
+            return ServerResponse.failure("没有该场会议");
+        }
+
+        List<MeetingUser> lists = meetingUserMapper.selectByMeetingId(meetingId);
+        List<User> userList = Lists.newArrayList();
+        for (MeetingUser mUser : lists){
+            User user = getUser(mUser.getUserId());
+            userList.add(user);
+        }
+        return ServerResponse.success(userList);
+    }
     private List<UserVO> listRealUser(List<MeetingUser> lists) {
         List<UserVO> userVOS = Lists.newArrayList();
         for (MeetingUser mUser : lists) {

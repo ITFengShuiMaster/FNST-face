@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="./css/meetingUserDetail.css"/>
+
+    <script src="./js/jquery-3.2.1.js"></script>
+</head>
+<body>
+<input id="id" value="" hidden/>
+    <div class="wrapper">
+        <div class="header">
+            <h2>欢迎参加
+                <span>方针说明会</span>
+            </h2>
+
+        </div>
+        <div class="content">
+            <button onclik="Signin();"><span>开始考勤</span></button>
+            <div class="content_wrapper">
+                <div class="meeting_people">
+                    <h2>与会人员</h2>
+                </div>
+                <div class="meeting_people_detail_all">
+                    <ul>
+                        <li class="meeting_people_detail">
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="meeting_visitor">
+                <div class="meeting_people_title">
+                    <h2>访客</h2>
+                </div>
+                <div class="meeting_visitor_detail_all">
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="/js/meetingUserDetail.js"></script>
+</body>
+</html>

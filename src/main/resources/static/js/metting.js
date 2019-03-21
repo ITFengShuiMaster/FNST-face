@@ -41,6 +41,7 @@ $(function() {
 
 		
 	});
+
 });
 
 
@@ -77,7 +78,7 @@ function details(id) {
 	var meetingID =  window.parent.document.getElementById('meetingID');
 	meetingID.value=id;
 
-	inputObject.src = "./participants.html";
+	inputObject.src = "./meetingUserDetail.html";
 	// console.log("ddd");
 	// console.log($('#frame').attr("src"));
 	// $('#frame').attr("src",'./participants.html');

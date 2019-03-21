@@ -1,7 +1,7 @@
 $(function() {
 
 	$('#employeelist').datagrid({
-		url : '/test.json/',
+		url : '/employee.json',
 		method:'get',
 		title : '员工列表',
 		striped : true,
@@ -33,7 +33,7 @@ $(function() {
 				width : 80,
 				formatter: function(value,row,index){
 
-					return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto("+row.src+")>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=remake("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delemp("+row.id+")>删除</button>"
+					return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto("+row.src+")>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=modifyemp("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delemp("+row.id+")>删除</button>"
 					
 					
 				}
@@ -74,6 +74,7 @@ function addemployee(){
 }
 
 function showPhoto(imgUrl){
+	console.log(imgUrl);
 	$('#img').dialog({
 		title: "照片",
 		iconCls:'icon-add-new',
@@ -86,6 +87,44 @@ function showPhoto(imgUrl){
 		href:"./img.html"
 	});
 
+
+}
+
+function modifyemp(id){
+	$('#employeedlog').dialog({
+		title: "员工添加",
+		iconCls:'icon-add-new',
+		width:400,
+		height:400,
+		closed: false,
+		cache: false,
+		modal: true,
+		queryParams:{'id':id},
+		href:"./addemployee.html"
+	});
+
+}
+function delemp(id){
+	$.ajax({
+		url : '/user/delete?id='+id,
+		type : 'get',
+		beforeSend : function () {
+			$.messager.progress({
+				text : '正在删除...,按Esc取消。'
+			});
+		},
+		success : function (data) {
+			console.log(data);
+			$.messager.progress('close');
+			if (data.code==1) {
+				$.messager.alert('提示', "删除成功！");
+				$("#employeelist").datagrid("reload");
+			}
+			else {
+				$.messager.alert('提示', data.message);
+			}
+		}
+	});
 
 }
 function empreLoad(){
