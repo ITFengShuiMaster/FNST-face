@@ -14,6 +14,20 @@ public class UserVO {
     private User user;
     private MeetingUser meetingUser;
 
+    public UserVO() {
+
+    }
+
+    public UserVO(User user) {
+        this.user = user;
+        this.meetingUser = null;
+    }
+
+    public UserVO(User user, MeetingUser meetingUser) {
+        this.user = user;
+        this.meetingUser = meetingUser;
+    }
+
     public User getUser() {
         return user;
     }

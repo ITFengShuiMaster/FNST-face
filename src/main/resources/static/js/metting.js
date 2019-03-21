@@ -1,51 +1,6 @@
 $(function() {
 	$('#meetinglist').datagrid({
-//<<<<<<< HEAD
-//    		url : '/meeting/list',
-//    		title : '会议列表',
-//    		striped : true,
-//    		nowrap : true,
-//    		rownumbers : true,
-//    		fitColumns : true,
-//    		fit:true,
-//    		singleSelect:true,
-//    		toolbar:$("#toolbar"),
-//    		columns : [[
-//    			{
-//    				field : 'name',
-//    				title : '会议名称',
-//    				width : 80
-//    			},
-//    			{
-//    				field : 'meetingTime',
-//    				title : '会议日期',
-//    				width : 60,
-//    //				formatter:function(value,row,index){
-//    //                 					if(value==undefined){
-//    //                 						return '';
-//    //                 					}else{
-//    ////                 						return parseToDate(value).format("yyyy-MM-dd");
-//    //                 					}
-//    //                 				}
-//    			},
-//    			{
-//    				field : 'id',     //"<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
-//    				title : '操作',
-//    				width : 80,
-//    				formatter: function(value,row,index){
-//    						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details("+row.id+");'>考勤信息</button><button class='btn btn-success btn-xs' data-toggle='modal' onclick='meetingAttendance("+row.id+");'>人员编辑</button><button class='btn btn-danger btn-xs' data-toggle='modal'onclick='deleteMeeting("+row.id+")'>删除</button>"
-//    				}
-//    			}
-//    		]],
-//
-//    		pagination : true,
-//    		pageSize : 20,
-//    		pageList : [20, 30, 40],
-//    		pageNumber : 1,
-//
-//    	});
-//=======
-		url : '/test.json/',
+		url : '/meeting/list/',
 		method:'get',
 		title : '会议列表',
 		striped : true,
@@ -62,43 +17,23 @@ $(function() {
 				width : 80
 			},
 			{
-				field : 'meetingTime',
+				field : 'createTime',
 				title : '会议日期',
-//<<<<<<< HEAD
-//				width : 60,
-////				formatter:function(value,row,index){
-////                 					if(value==undefined){
-////                 						return '';
-////                 					}else{
-//////                 						return parseToDate(value).format("yyyy-MM-dd");
-////                 					}
-////                 				}
-//=======
 				width : 60
-//>>>>>>> origin/bsc
 			},		
 			{
-				field : 'id',     //"<a style='text-decoration:none;' href='javascript:void(0)' onclick=showDetail("+row.id+");>详细信息</a>";
+				field : 'id',
 				title : '操作',
 				width : 80,
 				formatter: function(value,row,index){
-//<<<<<<< HEAD
-//						return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick='details("+row.id+");'>考勤信息</button><button class='btn btn-danger btn-xs' data-toggle='modal'onclick='deleteMeeting("+row.id+")'>删除</button>"
-//=======
-
-
-						return "<button class='btn btn-success btn-xs'  onclick=addparts("+row.id+");>添加人员</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+")>考勤信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delmt("+row.id+")>删除</button>"
-					
-					
-//>>>>>>> origin/bsc
+					return "<button class='btn btn-success btn-xs'  onclick=addparts("+row.id+");>添加人员" +
+						"</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+")>考勤信息" +
+						"</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delmt("+row.id+")>删除</button>"
 				}
 			}
-		]],		
-		
-
-		
+		]],
 	});
-//>>>>>>> 1a72a7236f3e805135e319eed9a6c438194bad3d
+
 });
 
 
@@ -192,12 +127,7 @@ function meetingAttendance(meetingId){
 function details(id){
 
 	$('#meetingdetails').dialog({
-//<<<<<<< HEAD
-//		title: "新增会议",
-//=======
 		title: "考勤信息",
-
-//>>>>>>> 1a72a7236f3e805135e319eed9a6c438194bad3d
 		width:800,
 		height:600,
 		closed: false,

@@ -6,6 +6,7 @@ import com.fnst.face.common.CommonVar;
 import com.fnst.face.common.ResponseCode;
 import com.fnst.face.common.ServerResponse;
 import com.fnst.face.entity.MeetingUser;
+import com.fnst.face.entity.MeetingUserKey;
 import com.fnst.face.entity.User;
 import com.fnst.face.mapper.MeetingMapper;
 import com.fnst.face.mapper.MeetingUserMapper;
@@ -49,61 +50,14 @@ public class UserMeetingService {
         this.fileService = fileService;
     }
 
-    private UserVO initUserVo(MeetingUser mUser) {
-        UserVO userVO = new UserVO();
-
-        User user = getUser(mUser.getUserId());
-        userVO.setUser(user);
-        userVO.setMeetingUser(mUser);
-
-        return userVO;
-    }
-
-    public ServerResponse listMeetingUser(Long meetingId) {
-        if (meetingId == null) {
-            return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
+    public ServerResponse deleteUserInMeeting(Long meetingId, Long userId) {
+        try {
+            meetingUserMapper.deleteByPrimaryKey(new MeetingUserKey(meetingId, userId));
+            return ServerResponse.success();
+        } catch (Exception e) {
+            log.error("{} is error", e);
+            return ServerResponse.failure(ResponseCode.SYSTEM_INNER_ERROR);
         }
-
-        if (meetingMapper.selectByPrimaryKey(meetingId) == null) {
-            return ServerResponse.failure("没有该场会议");
-        }
-
-        List<MeetingUser> lists = meetingUserMapper.selectByMeetingId(meetingId);
-        return ServerResponse.success(listRealUser(lists));
-    }
-
-    public ServerResponse listOnlyUser(Long meetingId){
-        if (meetingId == null) {
-            return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
-        }
-
-        if (meetingMapper.selectByPrimaryKey(meetingId) == null) {
-            return ServerResponse.failure("没有该场会议");
-        }
-
-        List<MeetingUser> lists = meetingUserMapper.selectByMeetingId(meetingId);
-        List<User> userList = Lists.newArrayList();
-        for (MeetingUser mUser : lists){
-            User user = getUser(mUser.getUserId());
-            userList.add(user);
-        }
-        return ServerResponse.success(userList);
-    }
-    private List<UserVO> listRealUser(List<MeetingUser> lists) {
-        List<UserVO> userVOS = Lists.newArrayList();
-        for (MeetingUser mUser : lists) {
-            UserVO userVO = initUserVo(mUser);
-            userVOS.add(userVO);
-        }
-        return userVOS;
-    }
-
-    private User getUser(Long id) {
-        if (id == null) {
-            return null;
-        }
-
-        return userMapper.selectByPrimaryKey(id);
     }
 
     public ServerResponse insertUserInMeeting(MeetingUser meetingUser) {
@@ -140,6 +94,75 @@ public class UserMeetingService {
         long end = System.nanoTime();
         System.out.println("数据库查询++++++++++++++  " + (end - start) / 100000000);
         return checkUser(path, onlineImgFaceToken, users, lists, meetingId, onlineImgFaceBase64_2);
+    }
+
+    public ServerResponse listMeetingUser(Long meetingId) {
+        if (meetingId == null) {
+            return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
+        }
+
+        if (meetingMapper.selectByPrimaryKey(meetingId) == null) {
+            return ServerResponse.failure("没有该场会议");
+        }
+
+        List<MeetingUser> lists = meetingUserMapper.selectByMeetingId(meetingId);
+        return ServerResponse.success(listRealUser(lists));
+    }
+
+    public ServerResponse listOnlyUser(Long meetingId){
+        if (meetingId == null) {
+            return ServerResponse.failure(ResponseCode.PARAM_IS_BLANK);
+        }
+
+        if (meetingMapper.selectByPrimaryKey(meetingId) == null) {
+            return ServerResponse.failure("没有该场会议");
+        }
+
+        List<MeetingUser> lists = meetingUserMapper.selectByMeetingId(meetingId);
+        List<User> userList = Lists.newArrayList();
+        for (MeetingUser mUser : lists){
+            User user = getUser(mUser.getUserId());
+            userList.add(user);
+        }
+        return ServerResponse.success(userList);
+    }
+
+    private UserVO initUserVo(MeetingUser mUser) {
+        UserVO userVO = new UserVO();
+
+        User user = getUser(mUser.getUserId());
+        userVO.setUser(user);
+        userVO.setMeetingUser(mUser);
+
+        return userVO;
+    }
+
+    private List<UserVO> listRealUser(List<MeetingUser> lists) {
+        List<UserVO> userVOS = Lists.newArrayList();
+        List<User> users = userMapper.selectAll();
+
+        for (User user : users) {
+            boolean isAdd = false;
+            for (int i = 0 ; i < lists.size() ; i ++) {
+                if (user.getId().equals(lists.get(i).getUserId())) {
+                    userVOS.add(new UserVO(user,lists.get(i)));
+                    lists.remove(i);
+                    isAdd = true;
+                }
+            }
+            if (!isAdd) {
+                userVOS.add(new UserVO(user));
+            }
+        }
+        return userVOS;
+    }
+
+    private User getUser(Long id) {
+        if (id == null) {
+            return null;
+        }
+
+        return userMapper.selectByPrimaryKey(id);
     }
 
     private ServerResponse checkUser(String path, String onlineImgFaceToken, List<User> users, List<MeetingUser> lists, Long meetingId, String onlineImgFaceBase64_2) {
