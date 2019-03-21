@@ -1,5 +1,3 @@
-
-
 $(function () {
     var lists = [
         {
@@ -118,42 +116,3 @@ function doReturnData(users) {
         }
     }
 }
-
-
-
-
-
-    // for (let index = 0; index < users.length; index++) {
-    //     const element = meetingUsers[index];
-    //     var meeting_people_detail = "";
-    //
-    //     if (element.imgUrl !== "") {
-    //         meeting_people_detail = `<li class="meeting_people_detail">
-    //                                     <div class="meeting_people_detail_title">
-    //                                         <h3>` + element.name + `</h3>
-    //                                     </div>
-    //                                    <div class="meeting_people_detail_content">
-    //                                         <img src="` + element.img_url + `">
-    //                                     </div>
-    //                                     `;
-    //     } else {
-    //         // 若img_url 为空， 显示默认图片
-    //     }
-    //     meeting_people_details.append(meeting_people_detail);
-    // }
-    //
-    // for (let index = 0; index < visitors.length; index++) {
-    //     const element = visitors[index];
-    //     var meeting_visitor_detail = "";
-    //
-    //     meeting_visitor_detail = `<li class="meeting_visitor_detail">
-    //                                 <div class="meeting_visitor_detail_title">
-    //                                     <h3>` + element.name + `</h3>
-    //                                 </div>
-    //                                 <div class="meeting_visitor_detail_content">
-    //                                     <img src="` + element.img_url + `">
-    //                                 </div>
-    //                                 `;
-    //
-    //     meeting_visitors_details.append(meeting_visitor_detail);
-    // }
