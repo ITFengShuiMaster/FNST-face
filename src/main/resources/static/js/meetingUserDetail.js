@@ -1,25 +1,16 @@
 $(function () {
-    var lists = [
-        {
-            name: "刘备",
-            img_url: "E:\\FNST\\face\\face\\src\\main\\resources\\static\\photo.png"//图片路径
-        },
-        {
-            name: "刘备",
-            img_url: "E:\\FNST\\face\\face\\src\\main\\resources\\static\\photo.png"//图片路径
-        },
-        {
-            name: "刘备",
-            img_url: "E:\\FNST\\face\\face\\src\\main\\resources\\static\\photo.png"//图片路径
-        },
-        {
-            name: "刘备",
-            img_url: "E:\\FNST\\face\\face\\src\\main\\resources\\static\\photo.png"//图片路径
-        }
-    ];
     var meetingID = window.parent.document.getElementById('meetingID');
     var id = meetingID.value;
     $('#id').attr("value", id);
+    getList();
+
+});
+
+
+function getList(){
+
+
+    let id=$('#id').attr("value");
 
     $.ajax({
         url: '/u_meeting/' + id,
@@ -39,8 +30,7 @@ $(function () {
             }
         }
     });
-});
-
+}
     /* 获得会议id */
 
 
@@ -53,10 +43,7 @@ function Signin() {
         closed: false,
         cache: false,
         modal: true,
-        href:"./signIn.html",
-        onClose: function () {
-        $("#projectQuery").css("right", "-1000px");
-    }
+        href:"./signIn.html"
     });
 
 }
@@ -67,7 +54,8 @@ function doReturnData(users) {
     const defaultImg = "http://127.0.0.1:8080/photo.png"
     let meeting_people_details = $('.meeting_people_detail_all ul');
     let meeting_visitors_details = $('.meeting_visitor_detail_all ul');
-
+    $('.meeting_people_detail_all ul li').remove();
+    $('.meeting_visitor_detail_all ul li').remove();
     for (let index = 0; index < users.length; index ++) {
         let user = users[index].user;
         let mUser = users[index].meetingUser;
