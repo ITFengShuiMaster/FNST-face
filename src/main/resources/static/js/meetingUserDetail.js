@@ -72,8 +72,20 @@ $(function () {
         
         meeting_visitors_details.append(meeting_visitor_detail);
     }
-})
-function Sigin() {
-    let id= $('#id').val();
+});
+function Signin() {
+    // let id= $('#id').val();
+    $('#signinview').dialog({
+        title: "考勤",
+        width:600,
+        height:400,
+        closed: false,
+        cache: false,
+        modal: true,
+        href:"./signIn.html",
+        onClose: function () {
+        $("#projectQuery").css("right", "-1000px");
+    }
+    });
 
 }
