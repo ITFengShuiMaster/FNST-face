@@ -163,6 +163,7 @@ function addparts(id){
 		cache: false,
 		modal: true,
 		queryParams: { "id":id},
+
 		href:"/addParticipants.html"
 	});
 }

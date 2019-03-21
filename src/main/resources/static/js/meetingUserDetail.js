@@ -31,12 +31,16 @@ function Signin() {
     // let id= $('#id').val();
     $('#signinview').dialog({
         title: "考勤",
-        width:600,
-        height:400,
+        width:700,
+        height:450,
         closed: false,
         cache: false,
         modal: true,
-        href:"./signIn.html"
+        href:"./temp.html",
+        onclose:function(){
+            alert();
+        }
+
     });
 
 }
