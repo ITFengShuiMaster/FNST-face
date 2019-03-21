@@ -129,7 +129,7 @@ function details(id) {
 	// 	href:"./meeting_details.html"
 	// });
 
-function deleteMeeting(id){
+function delmt(id){
     $.ajax({
                 url : '/meeting/'+id,
                 type : 'delete',

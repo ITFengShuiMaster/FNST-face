@@ -35,11 +35,7 @@ function takePhoto() {
             api_secret: "CTTqho-9btsW-DVPJcLeCBIFHIt6LH_A",
             image_base64: baseStr
         },
-        beforeSend : function () {
-            $.messager.progress({
-                text : '请稍后...'
-            });
-        },
+
         success: function (data) {
             console.log(data);
             if (data.faces.length !== 0) {
@@ -62,21 +58,23 @@ function haveFaceAndAjax(faceToken, bStr, meetingId) {
             onlineImgFaceBase64_2: bStr
         },
         success: function (data) {
+
+
             console.log(data);
             if (data.code == 1 && data.rows.meetingUser !== null) {
-                $.messager.progress('close');
+                // $.messager.progress('close');
                 console.log("未签到");
                 $("#u_id").html(data.rows.user.jobNumber);
                 $("#u_name").html(data.rows.user.name);
                 displayNow(1);
             } else if (data.rows.meetingUser == null) {
-                $.messager.progress('close');
+                // $.messager.progress('close');
                 console.log("已簽到");
                 $("#u_id").html(data.rows.user.jobNumber);
                 $("#u_name").html(data.rows.user.name);
                 displayNow(2);
             } else {
-                $.messager.progress('close');
+                // $.messager.progress('close');
                 // 顯示錯誤信息
 
             }
@@ -92,7 +90,10 @@ function displayNow(code) {
     if (code == 1) {
         $("#success").attr("class", "");
         timeOutDO($("#success"))
-        // getVideo(i);
+        setTimeout(function () {
+            getList();
+        },2000)
+
         $('#signinview').dialog()
     } else if (code == 2) {
         $("#again").attr("class", "");
