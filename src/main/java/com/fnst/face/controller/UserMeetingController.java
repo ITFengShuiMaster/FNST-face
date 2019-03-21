@@ -26,17 +26,23 @@ public class UserMeetingController {
     private UserMeetingService userMeetingService;
 
     @GetMapping("/{meetingId}")
-    public String list(@PathVariable Long meetingId) {
-        List<User> rows = (List<User>) userMeetingService.listOnlyUser(meetingId).getRows();
-        EasyUIResponse<User> response = new EasyUIResponse<>();
-        response.setTotal(rows.size());
-        response.setList(rows);
-        return JsonUtil.objToJson(response).replace("list","rows");
+    public ServerResponse list(@PathVariable Long meetingId) {
+//        List<User> rows = (List<User>) userMeetingService.listOnlyUser(meetingId).getRows();
+//        EasyUIResponse<User> response = new EasyUIResponse<>();
+//        response.setTotal(rows.size());
+//        response.setList(rows);
+//        return JsonUtil.objToJson(response).replace("list","rows");
+        return userMeetingService.listMeetingUser(meetingId);
     }
 
     @PostMapping
     public ServerResponse addUserInMeeting(MeetingUser meetingUser) {
         return userMeetingService.insertUserInMeeting(meetingUser);
+    }
+
+    @DeleteMapping("/remove/{meetingId}/{userId}")
+    public ServerResponse removeUserInMeeting(@PathVariable Long meetingId, @PathVariable Long userId) {
+        return userMeetingService.deleteUserInMeeting(meetingId, userId);
     }
 
     @PostMapping("/signIn/{meetingId}")

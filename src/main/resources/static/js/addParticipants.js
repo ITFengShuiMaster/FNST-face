@@ -1,11 +1,6 @@
 $(function() {
-//    $('#add').datagrid({
-//        url : '/employee.json/',
-//    var obj=$('#addparticipants').dialog('options');
-//    var queryParams = obj["queryParams"];
-//    var id =  queryParams["id"];
     $('#add').datagrid({
-        url : '/u_meeting/'+id,
+        url : '/u_meeting/' + getQueryParam(),
         method:'get',
         title : '',
         striped : true,
@@ -19,28 +14,36 @@ $(function() {
             {
                 field : 'name',
                 title : '姓名',
-                width : 80
+                width : 80,
+                formatter: function(value,row,index){
+                    return row.user.name;
+                }
             },
             {
                 field : 'jobNumber',
                 title : '工号',
                 width : 60,
+                formatter: function(value,row,index){
+                    return row.user.jobNumber;
+                }
             },
             {
                 field : 'id',
                 title : '操作',
                 width : 80,
                 formatter: function(value,row,index){
-                    if(row.isadd==false) {
-                        return "<button class='btn btn-success btn-xs'  onclick=addpart(getQueryParam(),"+row.id+");>添加</button>";
+                    if(row.meetingUser == null) {
+                        return "<button class='btn btn-success btn-xs'  onclick=addpart(getQueryParam(),"+row.user.id+");>添加</button>";
                     }else{
-                        return "<button class='btn btn-danger btn-xs'  onclick=delart(getQueryParam(),"+row.id+");>删除</button>"
+                        return "<button class='btn btn-danger btn-xs'  onclick=delpart(getQueryParam(),"+row.user.id+");>删除</button>"
                     }
 
                 }
             }
         ]],
     });
+
+    $('#add').datagrid("getData");
 });
 
 function search(){
@@ -62,16 +65,15 @@ function getQueryParam() {
     var queryParams = obj["queryParams"];
     return queryParams["id"];
     }
-
-function addpart(meetingid,employeeid){
-    console.log(meetingid,employeeid);
+function addpart(meetingId,userId){
+    console.log("会议ID: " + meetingId," 员工Id: " + userId);
     $.ajax({
-        url : '',
-        type : '',
+        url : '/u_meeting',
+        type : 'post',
         dataType: "json",
         data : {
-            'meetingid':meetingid,
-            'employeeid':employeeid
+            'meetingId':meetingId,
+            'userId':userId
         },
         beforeSend : function () {
             $.messager.progress({
@@ -80,27 +82,23 @@ function addpart(meetingid,employeeid){
         },
         success : function (data) {
             $.messager.progress('close');
-            if (data.result=='true') {
+            if (data.code == 1) {
                 $.messager.alert('提示', "添加成功！");
                 $("#add").datagrid("reload");
             }
             else {
-                $.messager.alert('提示', data.errorMessage);
+                $.messager.alert('提示', data.msg);
             }
         }
     });
 }
-function delpart(meetingid,employeeid){
-    console.log(meetingid,employeeid);
+function delpart(meetingId,userId){
+    console.log(meetingId,userId);
 
     $.ajax({
-        url : '',
-        type : '',
+        url : '/u_meeting/remove/' + meetingId + "/" + userId,
+        type : 'delete',
         dataType: "json",
-        data : {
-            'meetingid':meetingid,
-            'employeeid':employeeid
-        },
         beforeSend : function () {
             $.messager.progress({
                 text : '正在删除...,按Esc取消。'
@@ -108,12 +106,12 @@ function delpart(meetingid,employeeid){
         },
         success : function (data) {
             $.messager.progress('close');
-            if (data.result=='true') {
+            if (data.code == 1) {
                 $.messager.alert('提示', "删除成功！");
                 $("#add").datagrid("reload");
             }
             else {
-                $.messager.alert('提示', data.errorMessage);
+                $.messager.alert('提示', data.msg);
             }
         }
     });
