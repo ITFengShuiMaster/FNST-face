@@ -46,7 +46,8 @@ public class UserController {
     public ServerResponse search(@RequestParam("name") String name){
         return userService.searchUser(name);
     }
-    @PutMapping
+
+    @PostMapping("/update")
     public ServerResponse update(User user) {
         return userService.updateUser(user);
     }
