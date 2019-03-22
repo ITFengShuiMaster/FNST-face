@@ -42,7 +42,7 @@ public class UserController {
         return map;
     }
 
-    @PutMapping
+    @PostMapping("/update")
     public ServerResponse update(User user) {
         return userService.updateUser(user);
     }
