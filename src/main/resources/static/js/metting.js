@@ -176,3 +176,43 @@ function addparts(id){
 function mtreLoad(){
 	$("#meetinglist").datagrid("reload");
 }
+
+function searchMeeting(){
+    var keyword = $('#keyword').val();
+    console.log(keyword);
+
+    $('#meetinglist').datagrid({
+    		url : '/meeting/search?name='+keyword,
+    		method:'get',
+    		title : '会议列表',
+    		striped : true,
+    		nowrap : true,
+    		rownumbers : true,
+    		fitColumns : true,
+    		fit:true,
+    		singleSelect:true,
+    		toolbar:$("#toolbar"),
+    		columns : [[
+    			{
+    				field : 'name',
+    				title : '会议名称',
+    				width : 80
+    			},
+    			{
+    				field : 'createTime',
+    				title : '会议日期',
+    				width : 60
+    			},
+    			{
+    				field : 'id',
+    				title : '操作',
+    				width : 80,
+    				formatter: function(value,row,index){
+    					return "<button class='btn btn-success btn-xs'  onclick=addparts("+row.id+");>添加人员" +
+    						"</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=details("+row.id+",'"+row.name+"')>考勤信息" +
+    						"</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=delmt("+row.id+")>删除</button>"
+    				}
+    			}
+    		]],
+    	});
+}

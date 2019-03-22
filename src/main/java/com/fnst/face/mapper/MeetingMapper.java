@@ -20,4 +20,6 @@ public interface MeetingMapper {
     List<Meeting> selectAll();
     
     int insertReturnId(Meeting meeting);
+
+    List<Meeting> selectByName(String name);
 }

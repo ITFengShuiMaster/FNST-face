@@ -20,7 +20,11 @@ public class MeetingService {
 	public ServerResponse listMeeting() {
 		return ServerResponse.success(meetingMapper.selectAll());
 	}
-	
+
+	public ServerResponse getMeetings(String name){
+		return ServerResponse.success(meetingMapper.selectByName(name));
+	}
+
 	public ServerResponse getMeeting(Long id) {
 		return ServerResponse.success(meetingMapper.selectByPrimaryKey(id));
 	}
