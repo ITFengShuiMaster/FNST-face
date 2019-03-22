@@ -57,6 +57,10 @@ public class UserService {
         return ServerResponse.success();
     }
 
+    public ServerResponse searchUser(String name){
+        return ServerResponse.success(userMapper.selectByName(name));
+    }
+
     public ServerResponse updateUser(User user) {
         // TODO 待测
         user.setUpdateTime(new Date());

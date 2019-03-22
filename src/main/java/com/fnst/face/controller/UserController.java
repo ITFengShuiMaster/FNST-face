@@ -42,6 +42,10 @@ public class UserController {
         return map;
     }
 
+    @GetMapping("/search")
+    public ServerResponse search(@RequestParam("name") String name){
+        return userService.searchUser(name);
+    }
     @PutMapping
     public ServerResponse update(User user) {
         return userService.updateUser(user);

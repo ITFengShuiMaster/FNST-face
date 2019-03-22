@@ -154,3 +154,50 @@ function deleteUser(id){
                     }
                 });
 }
+function searchUser(){
+    var keyword = $('#keyword').val();
+    $('#employeelist').datagrid({
+    		url : '/user/search?name='+keyword,
+    		method:'get',
+    		title : '员工列表',
+    		striped : true,
+    		nowrap : true,
+    		rownumbers : true,
+    		fitColumns : true,
+    		fit:true,
+    		singleSelect:true,
+    		toolbar:$("#toolbar"),
+    		columns : [[
+    			{
+    				field : 'name',
+    				title : '姓名',
+    				width : 80
+    			},
+    			{
+    				field : 'sex',
+    				title : '性别',
+    				width : 80,
+                    formatter: function(value,row,index){
+    					if (row.sex) {
+    						return "男";
+    					} else {
+    						return "女";
+    					}
+                    }
+    			},
+    			{
+    				field : 'jobNumber',
+    				title : '工号',
+    				width : 60
+    			},
+    			{
+    				field : 'id',
+    				title : '操作',
+    				width : 80,
+    				formatter: function(value,row,index){
+                        return "<button class='btn btn-success btn-xs' data-toggle='modal' onclick=showPhoto('"+row.imgUrl+"')>查看照片</button>&nbsp;<button class='btn btn-success btn-xs' data-toggle='modal' onclick=remake("+row.id+")>修改信息</button>&nbsp;<button class='btn btn-danger btn-xs'  onclick=deleteUser("+row.id+")>删除</button>"
+    				}
+    			}
+    		]],
+    	});
+}
